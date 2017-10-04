@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B922FA4B-1584-4EA7-8656-F9034FB45F9D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prometheus.Client.Owin.RequestDurations", "src\Prometheus.Client.Owin.RequestDurations\Prometheus.Client.Owin.RequestDurations.csproj", "{B9B27A02-A7A2-4790-9C7B-68EFDAF9CCE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9B27A02-A7A2-4790-9C7B-68EFDAF9CCE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9B27A02-A7A2-4790-9C7B-68EFDAF9CCE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9B27A02-A7A2-4790-9C7B-68EFDAF9CCE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9B27A02-A7A2-4790-9C7B-68EFDAF9CCE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9B27A02-A7A2-4790-9C7B-68EFDAF9CCE5} = {B922FA4B-1584-4EA7-8656-F9034FB45F9D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {122FC3C2-0B76-492D-98B6-0E610316031E}
+	EndGlobalSection
+EndGlobal
