@@ -1,1 +1,1 @@
-# Prometheus.Client.Owin.RequestDurations
+# Prometheus.Client.HttpRequestDurations

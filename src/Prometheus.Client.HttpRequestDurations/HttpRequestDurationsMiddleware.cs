@@ -4,17 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Prometheus.Client.Owin.RequestDurations
+namespace Prometheus.Client.HttpRequestDurations
 {
-    public class RequestDurationsMiddleware
+    public class HttpRequestDurationsMiddleware
     {
         private string _metricHelpText = "duration histogram of http responses labeled with: ";
 
         private readonly RequestDelegate _next;
-        private readonly RequestDurationsOptions _options;
+        private readonly HttpRequestDurationsOptions _options;
         private Histogram _histogram;
 
-        public RequestDurationsMiddleware(RequestDelegate next, RequestDurationsOptions options)
+        public HttpRequestDurationsMiddleware(RequestDelegate next, HttpRequestDurationsOptions options)
         {
             _next = next;
             _options = options;
