@@ -8,7 +8,7 @@ namespace Prometheus.Client.Owin.RequestDurations
 {
     public class RequestDurationsMiddleware
     {
-        private static readonly string _metricHelpText = "duration histogram of http responses labeled with: ";
+        private string _metricHelpText = "duration histogram of http responses labeled with: ";
 
         private readonly RequestDelegate _next;
         private readonly RequestDurationsOptions _options;
@@ -30,6 +30,8 @@ namespace Prometheus.Client.Owin.RequestDurations
             if (_options.IncludePath)
                 labels.Add("path");
 
+            _metricHelpText += string.Join(", ", labels);
+           
             // create histogram with Registry            
         }
 
