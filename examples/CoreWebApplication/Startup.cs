@@ -1,4 +1,5 @@
-﻿using System.Security.AccessControl;
+﻿using System.Collections.Generic;
+using System.Security.AccessControl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -54,6 +55,11 @@ namespace CoreWebApplication
             {
                 q.IncludePath = true;
                 q.IncludeMethod = true;
+                q.ExcludeRoutes = new List<string>()
+                {
+                    "/favicon.ico",
+                    "/robots.txt"
+                };
             });
             
             app.UseMvc();

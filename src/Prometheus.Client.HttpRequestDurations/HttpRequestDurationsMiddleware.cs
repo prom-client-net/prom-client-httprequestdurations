@@ -42,7 +42,7 @@ namespace Prometheus.Client.HttpRequestDurations
 
         public async Task Invoke(HttpContext context)
         {
-            var route = context.Request.Path.ToString();
+            var route = context.Request.Path.ToString().ToLower();
             if (_options.ExcludeRoutes.Any(i => route.Contains(i)))
             {
                 await _next.Invoke(context);
@@ -50,8 +50,8 @@ namespace Prometheus.Client.HttpRequestDurations
             }
             
             var watch = Stopwatch.StartNew();
-
             await _next.Invoke(context);
+            watch.Stop();
             
             var labelValues = new List<string>();
             if (_options.IncludeStatusCode)
@@ -62,8 +62,6 @@ namespace Prometheus.Client.HttpRequestDurations
 
             if (_options.IncludePath)
                 labelValues.Add(route);
-            
-            watch.Stop();
             
             _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
         }
