@@ -1,10 +1,5 @@
-﻿*.nupkg
-*.user
-*.suo
-*.exe
-
-.vs
-bin
+﻿bin
 obj
-packages
 .idea
+*.user
+.vs
