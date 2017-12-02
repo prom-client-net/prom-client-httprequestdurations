@@ -14,7 +14,6 @@ namespace Prometheus.Client.HttpRequestDurations
         {
             var options = new HttpRequestDurationsOptions();
             setupAction?.Invoke(options);
-
             return app.UseMiddleware<HttpRequestDurationsMiddleware>(options);
         }
     }
