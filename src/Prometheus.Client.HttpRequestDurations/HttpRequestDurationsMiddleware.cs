@@ -6,13 +6,16 @@ using Microsoft.AspNetCore.Http;
 
 namespace Prometheus.Client.HttpRequestDurations
 {
+    /// <summary>
+    ///     Middleware for collect http responses
+    /// </summary>
     public class HttpRequestDurationsMiddleware
     {
-        private string _metricHelpText = "duration histogram of http responses labeled with: ";
+        private readonly string _metricHelpText = "duration histogram of http responses labeled with: ";
 
         private readonly RequestDelegate _next;
         private readonly HttpRequestDurationsOptions _options;
-        private Histogram _histogram;
+        private readonly Histogram _histogram;
 
         public HttpRequestDurationsMiddleware(RequestDelegate next, HttpRequestDurationsOptions options)
         {
@@ -31,8 +34,10 @@ namespace Prometheus.Client.HttpRequestDurations
                 labels.Add("path");
 
             _metricHelpText += string.Join(", ", labels);
-           
-            // create histogram with Registry            
+            _histogram = _options.CollectorRegistry == null 
+                ? Metrics.CreateHistogram(options.MetricName, _metricHelpText, labels.ToArray()) 
+                : Metrics.WithCustomRegistry(options.CollectorRegistry).CreateHistogram(options.MetricName, _metricHelpText, labels.ToArray());
+
         }
 
         public async Task Invoke(HttpContext context)
@@ -43,19 +48,24 @@ namespace Prometheus.Client.HttpRequestDurations
                 await _next.Invoke(context);
                 return;
             }
+            
             var watch = Stopwatch.StartNew();
 
             await _next.Invoke(context);
+            
+            var labelValues = new List<string>();
+            if (_options.IncludeStatusCode)
+                labelValues.Add(context.Response.StatusCode.ToString());
 
-            var method = context.Request.Method;
-            var statusCode = context.Response.StatusCode.ToString();
+            if (_options.IncludeMethod)
+                labelValues.Add(context.Request.Method);
 
+            if (_options.IncludePath)
+                labelValues.Add(route);
+            
             watch.Stop();
-            var seconds = watch.Elapsed.Seconds;
-            if (seconds > 0)
-            {
-                // write metric
-            }
+            
+            _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
         }
     }
 }
