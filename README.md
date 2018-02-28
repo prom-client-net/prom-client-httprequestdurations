@@ -6,9 +6,6 @@
 
 ## Installation
 
-    Install-Package Prometheus.Client.HttpRequestDurations
-Or
-
 	dotnet add package Prometheus.Client.HttpRequestDurations
 
 ## License
