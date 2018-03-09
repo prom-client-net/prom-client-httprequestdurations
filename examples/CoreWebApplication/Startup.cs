@@ -46,10 +46,14 @@ namespace CoreWebApplication
             {
                 q.IncludePath = true;
                 q.IncludeMethod = true;
-                q.ExcludeStartWithRoutes = new List<string>()
+                q.IgnoreRoutesConcrete = new []
                 {
                     "/favicon.ico",
                     "/robots.txt",
+                    "/"
+                };
+                q.IgnoreRoutesStartWith = new []
+                {
                     "/swagger"
                 };
             });

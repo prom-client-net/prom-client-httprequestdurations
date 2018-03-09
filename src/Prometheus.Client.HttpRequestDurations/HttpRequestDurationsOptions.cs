@@ -32,7 +32,17 @@ namespace Prometheus.Client.HttpRequestDurations
         /// <summary>
         ///     Ignore paths 
         /// </summary>
-        public List<string> ExcludeStartWithRoutes { get; set; }
+        public string[] IgnoreRoutesConcrete { get; set; }
+        
+        /// <summary>
+        ///     Ignore paths 
+        /// </summary>
+        public string[] IgnoreRoutesContains { get; set; }
+
+        /// <summary>
+        ///     Ignore paths 
+        /// </summary>
+        public string[] IgnoreRoutesStartWith { get; set; }
 
         /// <summary>
         ///     Collector Registry
@@ -49,8 +59,6 @@ namespace Prometheus.Client.HttpRequestDurations
             IncludeStatusCode = true;
             IncludeMethod = false;
             IncludePath = false;
-
-            ExcludeStartWithRoutes = new List<string>();
         }
     }
 }

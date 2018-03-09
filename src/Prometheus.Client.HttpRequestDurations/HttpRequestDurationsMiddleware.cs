@@ -35,26 +35,37 @@ namespace Prometheus.Client.HttpRequestDurations
                 labels.Add("path");
 
             _metricHelpText += string.Join(", ", labels);
-            _histogram = _options.CollectorRegistry == null 
-                ? Metrics.CreateHistogram(options.MetricName, _metricHelpText, labels.ToArray()) 
+            _histogram = _options.CollectorRegistry == null
+                ? Metrics.CreateHistogram(options.MetricName, _metricHelpText, labels.ToArray())
                 : Metrics.WithCustomRegistry(options.CollectorRegistry).CreateHistogram(options.MetricName, _metricHelpText, labels.ToArray());
-
         }
 
         public async Task Invoke(HttpContext context)
         {
             var route = context.Request.Path.ToString().ToLower();
 
-            if (_options.ExcludeStartWithRoutes.Any(i => route.StartsWith(i)))
+            if (_options.IgnoreRoutesStartWith != null && _options.IgnoreRoutesStartWith.Any(i => route.StartsWith(i)))
             {
                 await _next.Invoke(context);
                 return;
             }
-            
+
+            if (_options.IgnoreRoutesContains != null && _options.IgnoreRoutesContains.Any(i => route.Contains(i)))
+            {
+                await _next.Invoke(context);
+                return;
+            }
+
+            if (_options.IgnoreRoutesConcrete != null && _options.IgnoreRoutesConcrete.Any(i => route == i))
+            {
+                await _next.Invoke(context);
+                return;
+            }
+
             var watch = Stopwatch.StartNew();
             await _next.Invoke(context);
             watch.Stop();
-            
+
             var labelValues = new List<string>();
             if (_options.IncludeStatusCode)
                 labelValues.Add(context.Response.StatusCode.ToString());
@@ -64,7 +75,7 @@ namespace Prometheus.Client.HttpRequestDurations
 
             if (_options.IncludePath)
                 labelValues.Add(route);
-            
+
             _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
         }
     }
