@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.HttpRequestDurations
@@ -31,7 +32,7 @@ namespace Prometheus.Client.HttpRequestDurations
         /// <summary>
         ///     Ignore paths 
         /// </summary>
-        public List<string> ExcludeRoutes { get; set; }
+        public List<string> ExcludeStartWithRoutes { get; set; }
 
         /// <summary>
         ///     Collector Registry
@@ -48,8 +49,8 @@ namespace Prometheus.Client.HttpRequestDurations
             IncludeStatusCode = true;
             IncludeMethod = false;
             IncludePath = false;
-           
-            ExcludeRoutes = new List<string>();
+
+            ExcludeStartWithRoutes = new List<string>();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -43,7 +44,8 @@ namespace Prometheus.Client.HttpRequestDurations
         public async Task Invoke(HttpContext context)
         {
             var route = context.Request.Path.ToString().ToLower();
-            if (_options.ExcludeRoutes.Any(i => route.Contains(i)))
+
+            if (_options.ExcludeStartWithRoutes.Any(i => route.StartsWith(i)))
             {
                 await _next.Invoke(context);
                 return;
