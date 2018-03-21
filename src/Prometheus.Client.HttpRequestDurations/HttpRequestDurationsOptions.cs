@@ -30,6 +30,16 @@ namespace Prometheus.Client.HttpRequestDurations
         public bool IncludePath { get; set; }
 
         /// <summary>
+        ///     Replace GUID in path with constant
+        /// </summary>
+        public bool NormalizePathGuid { get; set; }
+
+        /// <summary>
+        ///     Replace Int in path with constant
+        /// </summary>
+        public bool NormalizePathInt { get; set; } 
+
+        /// <summary>
         ///     Ignore paths 
         /// </summary>
         public string[] IgnoreRoutesConcrete { get; set; }
@@ -56,6 +66,8 @@ namespace Prometheus.Client.HttpRequestDurations
         {
             MetricName = "http_request_duration_seconds";
 
+            NormalizePathGuid = false;
+            NormalizePathInt = false;
             IncludeStatusCode = true;
             IncludeMethod = false;
             IncludePath = false;

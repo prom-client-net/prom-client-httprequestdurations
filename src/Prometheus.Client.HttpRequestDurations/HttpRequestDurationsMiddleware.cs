@@ -34,6 +34,9 @@ namespace Prometheus.Client.HttpRequestDurations
             if (_options.IncludePath)
                 labels.Add("path");
 
+            if (_options.NormalizePathGuid || _options.NormalizePathInt)
+                labels.Add("normalizedPath");
+
             _metricHelpText += string.Join(", ", labels);
             _histogram = _options.CollectorRegistry == null
                 ? Metrics.CreateHistogram(options.MetricName, _metricHelpText, labels.ToArray())
@@ -66,6 +69,13 @@ namespace Prometheus.Client.HttpRequestDurations
             await _next.Invoke(context);
             watch.Stop();
 
+            string normalizedPath = route;
+            if (_options.NormalizePathGuid)
+                normalizedPath = NormalizeHelper.Replace(normalizedPath, @"\/[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\/", "/guid/");
+
+            if (_options.NormalizePathInt)
+                normalizedPath = NormalizeHelper.Replace(normalizedPath, @"\/[0-9]*\/", "/int/");
+
             var labelValues = new List<string>();
             if (_options.IncludeStatusCode)
                 labelValues.Add(context.Response.StatusCode.ToString());
@@ -76,7 +86,21 @@ namespace Prometheus.Client.HttpRequestDurations
             if (_options.IncludePath)
                 labelValues.Add(route);
 
+            if (_options.NormalizePathGuid || _options.NormalizePathInt)
+                labelValues.Add(normalizedPath);
+
             _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
+        }
+    }
+
+    internal static class NormalizeHelper
+    {
+        public static string Replace(string subjectString, string pattern, string replacement)
+        {
+            return Regex.Replace(subjectString,
+                pattern,
+                replacement,
+                RegexOptions.IgnoreCase);
         }
     }
 }
