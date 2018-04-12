@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -12,11 +11,11 @@ namespace Prometheus.Client.HttpRequestDurations
     /// </summary>
     public class HttpRequestDurationsMiddleware
     {
+        private readonly Histogram _histogram;
         private readonly string _metricHelpText = "duration histogram of http responses labeled with: ";
 
         private readonly RequestDelegate _next;
         private readonly HttpRequestDurationsOptions _options;
-        private readonly Histogram _histogram;
 
         public HttpRequestDurationsMiddleware(RequestDelegate next, HttpRequestDurationsOptions options)
         {
@@ -36,13 +35,14 @@ namespace Prometheus.Client.HttpRequestDurations
 
             _metricHelpText += string.Join(", ", labels);
             _histogram = _options.CollectorRegistry == null
-                ? Metrics.CreateHistogram(options.MetricName, _metricHelpText, labels.ToArray())
-                : Metrics.WithCustomRegistry(options.CollectorRegistry).CreateHistogram(options.MetricName, _metricHelpText, labels.ToArray());
+                ? Metrics.CreateHistogram(options.MetricName, _metricHelpText, _options.Buckets, labels.ToArray())
+                : Metrics.WithCustomRegistry(options.CollectorRegistry)
+                    .CreateHistogram(options.MetricName, _metricHelpText, _options.Buckets, labels.ToArray());
         }
 
         public async Task Invoke(HttpContext context)
         {
-            var route = context.Request.Path.ToString().ToLower();
+            string route = context.Request.Path.ToString().ToLower();
 
             if (_options.IgnoreRoutesStartWith != null && _options.IgnoreRoutesStartWith.Any(i => route.StartsWith(i)))
             {

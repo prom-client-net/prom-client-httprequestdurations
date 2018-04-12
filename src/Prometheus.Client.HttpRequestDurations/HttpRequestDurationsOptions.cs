@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Prometheus.Client.Collectors;
+﻿using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.HttpRequestDurations
 {
@@ -10,7 +8,7 @@ namespace Prometheus.Client.HttpRequestDurations
     public class HttpRequestDurationsOptions
     {
         /// <summary>
-        ///      Metric name
+        ///     Metric name
         /// </summary>
         public string MetricName { get; set; }
 
@@ -30,17 +28,17 @@ namespace Prometheus.Client.HttpRequestDurations
         public bool IncludePath { get; set; }
 
         /// <summary>
-        ///     Ignore paths 
+        ///     Ignore paths
         /// </summary>
         public string[] IgnoreRoutesConcrete { get; set; }
-        
+
         /// <summary>
-        ///     Ignore paths 
+        ///     Ignore paths
         /// </summary>
         public string[] IgnoreRoutesContains { get; set; }
 
         /// <summary>
-        ///     Ignore paths 
+        ///     Ignore paths
         /// </summary>
         public string[] IgnoreRoutesStartWith { get; set; }
 
@@ -48,6 +46,11 @@ namespace Prometheus.Client.HttpRequestDurations
         ///     Collector Registry
         /// </summary>
         public ICollectorRegistry CollectorRegistry { get; set; }
+
+        /// <summary>
+        ///     Buckets
+        /// </summary>
+        public double[] Buckets { get; set; }
 
         /// <summary>
         ///     Constructor

@@ -9,7 +9,7 @@ namespace Prometheus.Client.HttpRequestDurations
         {
             return UsePrometheusRequestDurations(app, null);
         }
-        
+
         public static IApplicationBuilder UsePrometheusRequestDurations(this IApplicationBuilder app, Action<HttpRequestDurationsOptions> setupAction)
         {
             var options = new HttpRequestDurationsOptions();
