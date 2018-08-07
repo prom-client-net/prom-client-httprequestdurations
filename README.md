@@ -1,6 +1,6 @@
 # Prometheus.Client.HttpRequestDurations
 
-[![Build status](https://ci.appveyor.com/api/projects/status/50rube6cul861wo2?svg=true)](https://ci.appveyor.com/project/phnx47/prometheus-client-httprequestdurations)
+[![Build status](https://ci.appveyor.com/api/projects/status/e1uhigqp9gxpw9it?svg=true)](https://ci.appveyor.com/project/PrometheusClientNet/prometheus-client-httprequestdurations)
 [![NuGet](https://img.shields.io/nuget/v/Prometheus.Client.HttpRequestDurations.svg)](https://www.nuget.org/packages/Prometheus.Client.HttpRequestDurations)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 

@@ -9,17 +9,17 @@
         <PackageId>Prometheus.Client.HttpRequestDurations</PackageId>
         <PackageTags>prometheus;metrics</PackageTags>
         <PackageIconUrl>https://image.ibb.co/k4Sc0k/prometheus.png</PackageIconUrl>
-        <PackageProjectUrl>https://github.com/phnx47/Prometheus.Client.HttpRequestDurations</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/PrometheusClientNet/Prometheus.Client.HttpRequestDurations</PackageProjectUrl>
         <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/phnx47/Prometheus.Client.HttpRequestDurations</RepositoryUrl>
+        <RepositoryUrl>https://github.com/PrometheusClientNet/Prometheus.Client.HttpRequestDurations</RepositoryUrl>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <PropertyGroup>
         <NoWarn>1591</NoWarn>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Prometheus.Client" Version="1.4.2"/>
+        <PackageReference Include="Prometheus.Client" Version="1.5.1"/>
     </ItemGroup>
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
         <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.2"/>
