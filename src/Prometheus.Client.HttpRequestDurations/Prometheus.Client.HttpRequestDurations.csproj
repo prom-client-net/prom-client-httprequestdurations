@@ -19,10 +19,10 @@
         <NoWarn>1591</NoWarn>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Prometheus.Client" Version="1.5.1"/>
+        <PackageReference Include="Prometheus.Client" Version="1.5.0"/>
     </ItemGroup>
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-        <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.2"/>
+        <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.0"/>
     </ItemGroup>
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
         <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0.0"/>
