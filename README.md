@@ -29,6 +29,10 @@ app.UsePrometheusRequestDurations(q =>
     {
         "/swagger"
     };
+    q.CustomLabels = new Dictionary<string, string>
+    {
+        { "service_name", "example" }
+    };
 });
 ```
 
