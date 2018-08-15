@@ -33,6 +33,11 @@ namespace Prometheus.Client.HttpRequestDurations
             if (_options.IncludePath)
                 labels.Add("path");
 
+            if (_options.IncludeCustomLabels)
+                foreach (var customLabel in _options.CustomLabels)
+                    labels.Add(customLabel.Key);
+
+
             _metricHelpText += string.Join(", ", labels);
             _histogram = _options.CollectorRegistry == null
                 ? Metrics.CreateHistogram(options.MetricName, _metricHelpText, _options.Buckets, labels.ToArray())
@@ -75,6 +80,10 @@ namespace Prometheus.Client.HttpRequestDurations
 
             if (_options.IncludePath)
                 labelValues.Add(route);
+
+            if (_options.IncludeCustomLabels)
+                foreach (var customLabel in _options.CustomLabels)
+                    labelValues.Add(customLabel.Value);
 
             _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
         }

@@ -1,4 +1,5 @@
-﻿using Prometheus.Client.Collectors;
+﻿using System.Collections.Generic;
+using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.HttpRequestDurations
 {
@@ -51,6 +52,17 @@ namespace Prometheus.Client.HttpRequestDurations
         ///     Buckets
         /// </summary>
         public double[] Buckets { get; set; }
+
+        /// <summary>
+        ///     Custom Labels
+        /// </summary>
+        public Dictionary<string, string> CustomLabels { get; set; }
+
+
+        /// <summary>
+        ///    Include Custom Labels
+        /// </summary>
+        public bool IncludeCustomLabels => CustomLabels != null;
 
         /// <summary>
         ///     Constructor
