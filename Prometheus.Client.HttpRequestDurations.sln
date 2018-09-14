@@ -13,15 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		appveyor.yml = appveyor.yml
 		.editorconfig = .editorconfig
+		pack.ps1 = pack.ps1
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.HttpRequestDurations", "src\Prometheus.Client.HttpRequestDurations\Prometheus.Client.HttpRequestDurations.csproj", "{C0984EB8-6DB2-4FA7-85E3-7BD1417EF31F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{852492CB-7359-4A9F-B769-9CF468B4B9A5}"
-ProjectSection(SolutionItems) = preProject
-	pack.ps1 = pack.ps1
-	build.ps1 = build.ps1
-EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,7 +34,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C0984EB8-6DB2-4FA7-85E3-7BD1417EF31F} = {B922FA4B-1584-4EA7-8656-F9034FB45F9D}
-		{852492CB-7359-4A9F-B769-9CF468B4B9A5} = {285A8931-C09A-482E-9EF3-D90AA616A0FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {122FC3C2-0B76-492D-98B6-0E610316031E}
