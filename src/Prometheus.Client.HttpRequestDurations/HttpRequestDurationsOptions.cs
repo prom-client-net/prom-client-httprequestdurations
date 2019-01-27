@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Prometheus.Client.Collectors.Abstractions;
 
 namespace Prometheus.Client.HttpRequestDurations
@@ -58,11 +59,21 @@ namespace Prometheus.Client.HttpRequestDurations
         /// </summary>
         public Dictionary<string, string> CustomLabels { get; set; }
 
+        /// <summary>
+        ///     Normalize Path
+        /// </summary>
+        public Dictionary<Regex, string> NormalizePath { get; set; }
+
 
         /// <summary>
         ///    Include Custom Labels
         /// </summary>
         public bool IncludeCustomLabels => CustomLabels != null;
+        
+        /// <summary>
+        ///    Include Normalize Path
+        /// </summary>
+        public bool IncludeNormalizePath => NormalizePath != null;
 
         /// <summary>
         ///     Constructor

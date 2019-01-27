@@ -78,13 +78,19 @@ namespace Prometheus.Client.HttpRequestDurations
             if (_options.IncludeMethod)
                 labelValues.Add(context.Request.Method);
 
-            if (_options.IncludePath)
-                labelValues.Add(route);
-
+            
             if (_options.IncludeCustomLabels)
                 foreach (var customLabel in _options.CustomLabels)
                     labelValues.Add(customLabel.Value);
+            
+            if(_options.IncludePath && _options.IncludeNormalizePath)
+                foreach (var normalizePath in _options.NormalizePath)
+                    route = normalizePath.Key.Replace(route, normalizePath.Value);
+                
+            if (_options.IncludePath)
+                labelValues.Add(route);
 
+          
             _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
         }
     }
