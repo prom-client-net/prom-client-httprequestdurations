@@ -13,9 +13,9 @@ after_build:
 
 artifacts:
 - path: '**/artifacts/nuget/*.nupkg'
-  name: Nuget
+  name: NuGet
 - path: '**/artifacts/myget/*.nupkg'
-  name: Myget
+  name: MyGet
   
 deploy:
 - provider: NuGet
@@ -23,7 +23,7 @@ deploy:
     secure: 3eDHfk4d9Ye2+sj4T+7t6AlSDvIseFx/QuRtt5fHy8QOp+Hl+6X9daiBXRl3qpuv
   artifact: NuGet
   on:
-    appveyor_repo_tag: true   
+    APPVEYOR_REPO_TAG: true   
 - provider: NuGet
   server: https://www.myget.org/F/phnx47-beta/api/v2/package
   api_key:
@@ -32,4 +32,4 @@ deploy:
   artifact: MyGet
   on:
     branch: master
-    appveyor_repo_tag: false
+    APPVEYOR_REPO_TAG: false
