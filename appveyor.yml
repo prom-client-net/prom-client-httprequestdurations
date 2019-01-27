@@ -9,7 +9,7 @@ build_script:
 - sh: dotnet build -c Release
 
 after_build:
-- sh: ./pack.sh
+- sh: chmod +x pack.sh && ./pack.sh
 
 artifacts:
 - path: '**/artifacts/nuget/*.nupkg'
