@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -47,21 +48,24 @@ namespace Prometheus.Client.HttpRequestDurations
 
         public async Task Invoke(HttpContext context)
         {
-            string route = context.Request.Path.ToString().ToLower();
+            var path = context.Request.Path.ToString().ToLower();
+            if (_options.IncludeNormalizePath)
+                foreach (var normalizePath in _options.NormalizePath)
+                    path = normalizePath.Key.Replace(path, normalizePath.Value);
 
-            if (_options.IgnoreRoutesStartWith != null && _options.IgnoreRoutesStartWith.Any(i => route.StartsWith(i)))
+            if (_options.IgnoreRoutesStartWith != null && _options.IgnoreRoutesStartWith.Any(i => path.StartsWith(i)))
             {
                 await _next.Invoke(context);
                 return;
             }
 
-            if (_options.IgnoreRoutesContains != null && _options.IgnoreRoutesContains.Any(i => route.Contains(i)))
+            if (_options.IgnoreRoutesContains != null && _options.IgnoreRoutesContains.Any(i => path.Contains(i)))
             {
                 await _next.Invoke(context);
                 return;
             }
 
-            if (_options.IgnoreRoutesConcrete != null && _options.IgnoreRoutesConcrete.Any(i => route == i))
+            if (_options.IgnoreRoutesConcrete != null && _options.IgnoreRoutesConcrete.Any(i => path == i))
             {
                 await _next.Invoke(context);
                 return;
@@ -78,19 +82,15 @@ namespace Prometheus.Client.HttpRequestDurations
             if (_options.IncludeMethod)
                 labelValues.Add(context.Request.Method);
 
-            
+
             if (_options.IncludeCustomLabels)
                 foreach (var customLabel in _options.CustomLabels)
                     labelValues.Add(customLabel.Value);
-            
-            if(_options.IncludePath && _options.IncludeNormalizePath)
-                foreach (var normalizePath in _options.NormalizePath)
-                    route = normalizePath.Key.Replace(route, normalizePath.Value);
-                
-            if (_options.IncludePath)
-                labelValues.Add(route);
 
-          
+
+            if (_options.IncludePath)
+                labelValues.Add(path);
+
             _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
         }
     }
