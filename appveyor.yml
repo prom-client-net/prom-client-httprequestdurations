@@ -9,12 +9,12 @@ build_script:
 - sh: dotnet build -c Release
 
 after_build:
-- sh: .\pack.sh
+- sh: ./pack.sh
 
 artifacts:
-- path: '**\artifacts\nuget\*.nupkg'
+- path: '**/artifacts/nuget/*.nupkg'
   name: Nuget
-- path: '**\artifacts\myget\*.nupkg'
+- path: '**/artifacts/myget/*.nupkg'
   name: Myget
   
 deploy:
