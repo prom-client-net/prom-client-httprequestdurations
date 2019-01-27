@@ -1,8 +1,10 @@
 # Prometheus.Client.HttpRequestDurations
 
-[![Build status](https://ci.appveyor.com/api/projects/status/e1uhigqp9gxpw9it?svg=true)](https://ci.appveyor.com/project/PrometheusClientNet/prometheus-client-httprequestdurations)
 [![MyGet](https://img.shields.io/myget/phnx47-beta/vpre/Prometheus.Client.HttpRequestDurations.svg)](https://www.myget.org/feed/phnx47-beta/package/nuget/Prometheus.Client.HttpRequestDurations)
 [![NuGet](https://img.shields.io/nuget/v/Prometheus.Client.HttpRequestDurations.svg)](https://www.nuget.org/packages/Prometheus.Client.HttpRequestDurations)
+[![NuGet](https://img.shields.io/nuget/dt/Prometheus.Client.HttpRequestDurations.svg)](https://www.nuget.org/packages/Prometheus.Client.HttpRequestDurations)
+
+[![Build status](https://ci.appveyor.com/api/projects/status/e1uhigqp9gxpw9it?svg=true)](https://ci.appveyor.com/project/PrometheusClientNet/prometheus-client-httprequestdurations)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 
 ## Installation
@@ -35,6 +37,21 @@ app.UsePrometheusRequestDurations(q =>
     };
 });
 ```
+
+## Contribute
+
+Contributions to the package are always welcome!
+
+* Report any bugs or issues you find on the [issue tracker](https://github.com/PrometheusClientNet/Prometheus.Client.HttpRequestDurations/issues).
+* You can grab the source code at the package's [git repository](https://github.com/PrometheusClientNet/Prometheus.Client.HttpRequestDurations).
+
+## Support
+
+If you are having problems, send a mail to [prometheus@phnx47.net](mailto://prometheus@phnx47.net). I will try to help you.
+
+I would also very much appreciate your support by buying me a coffee.
+
+<a href="https://www.buymeacoffee.com/phnx47" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 
 ## License
