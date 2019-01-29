@@ -38,7 +38,6 @@ namespace Prometheus.Client.HttpRequestDurations
                 foreach (var customLabel in _options.CustomLabels)
                     labels.Add(customLabel.Key);
 
-
             _metricHelpText += string.Join(", ", labels);
             _histogram = _options.CollectorRegistry == null
                 ? Metrics.CreateHistogram(options.MetricName, _metricHelpText, _options.Buckets, labels.ToArray())
@@ -75,6 +74,8 @@ namespace Prometheus.Client.HttpRequestDurations
             await _next.Invoke(context);
             watch.Stop();
 
+            // Order is important
+            
             var labelValues = new List<string>();
             if (_options.IncludeStatusCode)
                 labelValues.Add(context.Response.StatusCode.ToString());
@@ -82,14 +83,12 @@ namespace Prometheus.Client.HttpRequestDurations
             if (_options.IncludeMethod)
                 labelValues.Add(context.Request.Method);
 
+            if (_options.IncludePath)
+                labelValues.Add(path);
 
             if (_options.IncludeCustomLabels)
                 foreach (var customLabel in _options.CustomLabels)
                     labelValues.Add(customLabel.Value);
-
-
-            if (_options.IncludePath)
-                labelValues.Add(path);
 
             _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
         }
