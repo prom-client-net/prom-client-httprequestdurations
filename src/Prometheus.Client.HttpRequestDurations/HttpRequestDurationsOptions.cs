@@ -62,18 +62,18 @@ namespace Prometheus.Client.HttpRequestDurations
         /// <summary>
         ///     Normalize Path
         /// </summary>
-        public Dictionary<Regex, string> NormalizePath { get; set; }
+        public Dictionary<Regex, string> CustomNormalizePath { get; set; }
 
 
         /// <summary>
         ///    Include Custom Labels
         /// </summary>
         public bool IncludeCustomLabels => CustomLabels != null;
-        
+
         /// <summary>
-        ///    Include Normalize Path
+        ///    Include Custom Normalize Path
         /// </summary>
-        public bool IncludeNormalizePath => NormalizePath != null;
+        public bool IncludeCustomNormalizePath => CustomNormalizePath != null;
 
         /// <summary>
         ///     Constructor

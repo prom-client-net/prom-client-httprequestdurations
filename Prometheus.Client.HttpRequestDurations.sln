@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.HttpRequestDurations", "src\Prometheus.Client.HttpRequestDurations\Prometheus.Client.HttpRequestDurations.csproj", "{C0984EB8-6DB2-4FA7-85E3-7BD1417EF31F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AAD0EF6F-D1C4-4C13-97A5-2E2E529E4384}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.HttpRequestDurations.Tests", "Prometheus.Client.HttpRequestDurations.Tests\Prometheus.Client.HttpRequestDurations.Tests.csproj", "{BB1F051C-5B6E-4FAA-BFF0-6ABFBB869D4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,12 +32,17 @@ Global
 		{C0984EB8-6DB2-4FA7-85E3-7BD1417EF31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0984EB8-6DB2-4FA7-85E3-7BD1417EF31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0984EB8-6DB2-4FA7-85E3-7BD1417EF31F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB1F051C-5B6E-4FAA-BFF0-6ABFBB869D4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB1F051C-5B6E-4FAA-BFF0-6ABFBB869D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB1F051C-5B6E-4FAA-BFF0-6ABFBB869D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB1F051C-5B6E-4FAA-BFF0-6ABFBB869D4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C0984EB8-6DB2-4FA7-85E3-7BD1417EF31F} = {B922FA4B-1584-4EA7-8656-F9034FB45F9D}
+		{BB1F051C-5B6E-4FAA-BFF0-6ABFBB869D4F} = {AAD0EF6F-D1C4-4C13-97A5-2E2E529E4384}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {122FC3C2-0B76-492D-98B6-0E610316031E}

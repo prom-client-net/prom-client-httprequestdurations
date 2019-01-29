@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Prometheus.Client.HttpRequestDurations.Tools;
 
 namespace Prometheus.Client.HttpRequestDurations
 {
@@ -47,10 +48,7 @@ namespace Prometheus.Client.HttpRequestDurations
 
         public async Task Invoke(HttpContext context)
         {
-            var path = context.Request.Path.ToString().ToLower();
-            if (_options.IncludeNormalizePath)
-                foreach (var normalizePath in _options.NormalizePath)
-                    path = normalizePath.Key.Replace(path, normalizePath.Value);
+            var path = NormalizePath.Execute(context.Request.Path, _options);
 
             if (_options.IgnoreRoutesStartWith != null && _options.IgnoreRoutesStartWith.Any(i => path.StartsWith(i)))
             {
@@ -75,7 +73,7 @@ namespace Prometheus.Client.HttpRequestDurations
             watch.Stop();
 
             // Order is important
-            
+
             var labelValues = new List<string>();
             if (_options.IncludeStatusCode)
                 labelValues.Add(context.Response.StatusCode.ToString());
@@ -86,7 +84,7 @@ namespace Prometheus.Client.HttpRequestDurations
             if (_options.IncludePath)
                 labelValues.Add(path);
 
-            if (_options.IncludeCustomLabels)
+            if (_options.CustomLabels != null)
                 foreach (var customLabel in _options.CustomLabels)
                     labelValues.Add(customLabel.Value);
 
