@@ -17,9 +17,9 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
         {
             var pathString = new PathString($"/path/to/{id}/next");
             
-            var options = new HttpRequestDurationsOptions()
+            var options = new HttpRequestDurationsOptions
             {
-                CustomNormalizePath = new Dictionary<Regex, string>()
+                CustomNormalizePath = new Dictionary<Regex, string>
                 {
                     { new Regex(@"\/[0-9]{1,}(?![a-z])"), "/id" }
                 }

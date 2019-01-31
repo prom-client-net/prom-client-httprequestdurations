@@ -9,8 +9,7 @@
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
-  
   <ItemGroup>
-    <ProjectReference Include="..\src\Prometheus.Client.HttpRequestDurations\Prometheus.Client.HttpRequestDurations.csproj" />
+    <ProjectReference Include="..\..\src\Prometheus.Client.HttpRequestDurations\Prometheus.Client.HttpRequestDurations.csproj" />
   </ItemGroup>
 </Project>
