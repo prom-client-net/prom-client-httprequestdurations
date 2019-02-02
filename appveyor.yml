@@ -8,6 +8,9 @@ skip_commits:
 build_script:
 - sh: dotnet build -c Release
 
+test_script:
+- sh: dotnet test -c Release --no-build
+
 after_build:
 - sh: chmod +x pack.sh && ./pack.sh
 
