@@ -56,7 +56,7 @@ namespace Prometheus.Client.HttpRequestDurations
         public double[] Buckets { get; set; }
 
         /// <summary>
-        ///     Custom Labels
+        ///     Custom Labels. Use only, if you cannot use 'relabel_configs' in Prometheus
         /// </summary>
         public Dictionary<string, Func<string>> CustomLabels { get; set; }
 

@@ -33,10 +33,6 @@ app.UsePrometheusRequestDurations(q =>
     {
         "/swagger" // Ignore '/swagger/*'
     };
-    q.CustomLabels = new Dictionary<string, string>
-    {
-        { "service_name", "example" }
-    };
     q.CustomNormalizePath = new Dictionary<Regex, string>
     {
         { new Regex(@"\/[0-9]{1,}(?![a-z])"), "/id" } // Replace 'int' in Route
