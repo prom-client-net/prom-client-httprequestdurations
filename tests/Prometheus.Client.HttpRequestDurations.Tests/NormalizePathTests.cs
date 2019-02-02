@@ -8,15 +8,22 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
 {
     public class NormalizePathTests
     {
+        public static IEnumerable<object[]> GetInt()
+        {
+            // ID - can't be less 0
+            yield return new object[] { 2 };
+            yield return new object[] { 0 };
+            yield return new object[] { 4 };
+            yield return new object[] { 648 };
+        }
+
+
         [Theory]
-        [InlineData(2)]
-        [InlineData(0)]
-        [InlineData(4)]
-        [InlineData(156842)]
-        public void Normalize_Int_Center(uint id) // ID - can't be less 0
+        [MemberData(nameof(GetInt))]
+        public void Int_Center(uint id)
         {
             var pathString = new PathString($"/path/to/{id}/next");
-            
+
             var options = new HttpRequestDurationsOptions
             {
                 CustomNormalizePath = new Dictionary<Regex, string>
@@ -27,6 +34,42 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
 
             var path = NormalizePath.Execute(pathString, options);
             Assert.Equal($"/path/to/id/next", path);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetInt))]
+        public void Int_Right(uint id) // ID - can't be less 0
+        {
+            var pathString = new PathString($"/path/to/{id}");
+
+            var options = new HttpRequestDurationsOptions
+            {
+                CustomNormalizePath = new Dictionary<Regex, string>
+                {
+                    { new Regex(@"\/[0-9]{1,}(?![a-z])"), "/id" }
+                }
+            };
+
+            var path = NormalizePath.Execute(pathString, options);
+            Assert.Equal($"/path/to/id", path);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetInt))]
+        public void Int_Right_WithSlash(uint id) // ID - can't be less 0
+        {
+            var pathString = new PathString($"/path/to/{id}/");
+
+            var options = new HttpRequestDurationsOptions
+            {
+                CustomNormalizePath = new Dictionary<Regex, string>
+                {
+                    { new Regex(@"\/[0-9]{1,}(?![a-z])"), "/id" }
+                }
+            };
+
+            var path = NormalizePath.Execute(pathString, options);
+            Assert.Equal($"/path/to/id/", path);
         }
     }
 }

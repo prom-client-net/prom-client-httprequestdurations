@@ -13,7 +13,7 @@
 	dotnet add package Prometheus.Client.HttpRequestDurations
 	
 
-#### Quik start:
+#### Use:
 
 There are [Examples](https://github.com/PrometheusClientNet/Prometheus.Client.Examples/tree/master/HttpRequestDurations)
 
@@ -22,7 +22,7 @@ app.UsePrometheusRequestDurations(q =>
 {
     q.IncludePath = true;
     q.IncludeMethod = true;
-    q.IgnoreRoutesConcrete = new[]
+    q.IgnoreRoutesConcrete = new[] // Ignore some concrete routes
     {
         "/favicon.ico",
         "/robots.txt",
@@ -30,11 +30,15 @@ app.UsePrometheusRequestDurations(q =>
     };
     q.IgnoreRoutesStartWith = new[]
     {
-        "/swagger"
+        "/swagger" // Ignore '/swagger/*'
     };
     q.CustomLabels = new Dictionary<string, string>
     {
         { "service_name", "example" }
+    };
+    q.CustomNormalizePath = new Dictionary<Regex, string>
+    {
+        { new Regex(@"\/[0-9]{1,}(?![a-z])"), "/id" } // Replace 'int' in Route
     };
 });
 ```
