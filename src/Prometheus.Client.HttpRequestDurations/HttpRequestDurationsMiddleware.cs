@@ -86,7 +86,7 @@ namespace Prometheus.Client.HttpRequestDurations
 
             if (_options.CustomLabels != null)
                 foreach (var customLabel in _options.CustomLabels)
-                    labelValues.Add(customLabel.Value);
+                    labelValues.Add(customLabel.Value());
 
             _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
         }
