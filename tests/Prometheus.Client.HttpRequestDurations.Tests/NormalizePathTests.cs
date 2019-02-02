@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +16,12 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
             yield return new object[] { 0 };
             yield return new object[] { 4 };
             yield return new object[] { 648 };
+
+            var rnd = new Random();
+            
+            yield return new object[] { rnd.Next(0, int.MaxValue) };
+            yield return new object[] { rnd.Next(0, int.MaxValue) };
+            yield return new object[] { rnd.Next(0, int.MaxValue) };
         }
 
 

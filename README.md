@@ -6,6 +6,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/e1uhigqp9gxpw9it?svg=true)](https://ci.appveyor.com/project/PrometheusClientNet/prometheus-client-httprequestdurations)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ea3b8149566f4c0ebac1567aa964553f)](https://www.codacy.com/app/phnx47/Prometheus.Client.HttpRequestDurations?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PrometheusClientNet/Prometheus.Client.HttpRequestDurations&amp;utm_campaign=Badge_Grade)
+[![AppVeyor tests](https://img.shields.io/appveyor/tests/PrometheusClientNet/prometheus-client-httprequestdurations.svg)](https://ci.appveyor.com/project/PrometheusClientNet/prometheus-clienthttprequestdurations/build/tests)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 
 ## Installation
