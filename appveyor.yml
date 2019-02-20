@@ -11,7 +11,7 @@ build_script:
 test_script:
 - sh: dotnet test -c Release --no-build
 
-after_build:
+after_test:
 - sh: chmod +x pack.sh && ./pack.sh
 
 artifacts:
