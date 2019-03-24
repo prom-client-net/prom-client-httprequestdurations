@@ -3,7 +3,7 @@
     <Description>Metrics logging of request durations for the Prometheus.Client</Description>
     <Copyright>2019 © Sergey Kuznetsov</Copyright>
     <AssemblyTitle>Prometheus.Client.HttpRequestDurations</AssemblyTitle>
-    <VersionPrefix>1.2.1</VersionPrefix>
+    <VersionPrefix>1.2.2</VersionPrefix>
     <Authors>Sergey Kuznetsov</Authors>
     <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
     <PackageId>Prometheus.Client.HttpRequestDurations</PackageId>
@@ -19,7 +19,7 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="[2.0.0,3.0.0)" />
+    <PackageReference Include="Prometheus.Client" Version="[2.2.0,3.0.0)" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.0" />
