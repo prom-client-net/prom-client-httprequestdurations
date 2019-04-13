@@ -14,6 +14,8 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/PrometheusClientNet/Prometheus.Client.HttpRequestDurations</RepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../../Prometheus.Client.HttpRequestDurations.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <NoWarn>1591</NoWarn>
