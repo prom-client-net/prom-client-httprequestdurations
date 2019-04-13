@@ -1,6 +1,6 @@
 # Prometheus.Client.HttpRequestDurations
 
-[![MyGet](https://img.shields.io/myget/phnx47-beta/vpre/Prometheus.Client.HttpRequestDurations.svg)](https://www.myget.org/feed/phnx47-beta/package/nuget/Prometheus.Client.HttpRequestDurations)
+[![MyGet](https://img.shields.io/myget/prometheus-client-net/vpre/Prometheus.Client.HttpRequestDurations.svg?label=myget)](https://www.myget.org/feed/prometheus-client-net/package/nuget/Prometheus.Client.HttpRequestDurations)
 [![NuGet](https://img.shields.io/nuget/v/Prometheus.Client.HttpRequestDurations.svg)](https://www.nuget.org/packages/Prometheus.Client.HttpRequestDurations)
 [![NuGet](https://img.shields.io/nuget/dt/Prometheus.Client.HttpRequestDurations.svg)](https://www.nuget.org/packages/Prometheus.Client.HttpRequestDurations)
 
