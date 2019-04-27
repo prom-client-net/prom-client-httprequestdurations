@@ -9,13 +9,12 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
 {
     public class NormalizePathTests
     {
-        private const string _intRegexPattern = @"\/[0-9]{1,}(?![a-z])";
+        private static readonly Regex _intRegex = new Regex(@"\/[0-9]{1,}(?![a-z])", RegexOptions.Compiled);
         private const string _intValue = "/id";
-        
-        private const string _guidRegexPattern = @"\/[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}";
+
+        private static readonly Regex _guidRegex = new Regex(@"\/[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}", RegexOptions.Compiled);
         private const string _guidValue = "/guid";
-        
-    
+
         public static IEnumerable<object[]> GetInt()
         {
             // ID - can't be less 0
@@ -40,7 +39,6 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
             yield return new object[] { Guid.NewGuid().ToString() };
         }
 
-
         [Theory]
         [MemberData(nameof(GetInt))]
         public void Int_Center(uint id)
@@ -51,7 +49,7 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
             {
                 CustomNormalizePath = new Dictionary<Regex, string>
                 {
-                    { new Regex(_intRegexPattern), _intValue }
+                    { _intRegex, _intValue }
                 }
             };
 
@@ -69,7 +67,7 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
             {
                 CustomNormalizePath = new Dictionary<Regex, string>
                 {
-                    { new Regex(_intRegexPattern), _intValue }
+                    { _intRegex, _intValue }
                 }
             };
 
@@ -87,7 +85,7 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
             {
                 CustomNormalizePath = new Dictionary<Regex, string>
                 {
-                    { new Regex(_intRegexPattern), _intValue }
+                    { _intRegex, _intValue }
                 }
             };
 
@@ -95,10 +93,9 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
             Assert.Equal($"/path/to/id/", path);
         }
 
-
         [Theory]
         [MemberData(nameof(GetGuid))]
-        public void GuidCenter_Center(string guid)
+        public void Guid_Center(string guid)
         {
             var pathString = new PathString($"/path/to/{guid}/next");
 
@@ -106,17 +103,17 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
             {
                 CustomNormalizePath = new Dictionary<Regex, string>
                 {
-                    { new Regex(_guidRegexPattern), _guidValue }
+                    { _guidRegex, _guidValue }
                 }
             };
 
             var path = NormalizePath.Execute(pathString, options);
             Assert.Equal($"/path/to/guid/next", path);
         }
-        
+
         [Theory]
         [MemberData(nameof(GetGuid))]
-        public void GuidCenter_Right(string guid)
+        public void Guid_Right(string guid)
         {
             var pathString = new PathString($"/path/to/{guid}");
 
@@ -124,17 +121,17 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
             {
                 CustomNormalizePath = new Dictionary<Regex, string>
                 {
-                    { new Regex(_guidRegexPattern), _guidValue }
+                    { _guidRegex, _guidValue }
                 }
             };
 
             var path = NormalizePath.Execute(pathString, options);
             Assert.Equal($"/path/to/guid", path);
         }
-        
+
         [Theory]
         [MemberData(nameof(GetGuid))]
-        public void GuidCenter_Right_WithSlash(string guid)
+        public void Guid_Right_WithSlash(string guid)
         {
             var pathString = new PathString($"/path/to/{guid}/");
 
@@ -142,7 +139,7 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
             {
                 CustomNormalizePath = new Dictionary<Regex, string>
                 {
-                    { new Regex(_guidRegexPattern), _guidValue }
+                    { _guidRegex, _guidValue }
                 }
             };
 
