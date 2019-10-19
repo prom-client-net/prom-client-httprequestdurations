@@ -78,15 +78,14 @@ namespace Prometheus.Client.HttpRequestDurations
             catch (Exception ex)
             {
                 if (ex.Message == "500")
-                {
                     statusCode = ex.Message;
-                    watch.Stop();
-                    WriteMetrics();
-                }
                 throw;
             }
-            watch.Stop();
-            WriteMetrics();
+            finally
+            {
+                watch.Stop();
+                WriteMetrics();
+            }
             
             void WriteMetrics()
             {
