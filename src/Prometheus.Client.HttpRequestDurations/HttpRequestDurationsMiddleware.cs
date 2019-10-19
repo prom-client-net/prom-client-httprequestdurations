@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,8 +36,7 @@ namespace Prometheus.Client.HttpRequestDurations
                 labels.Add("path");
 
             if (_options.IncludeCustomLabels)
-                foreach (var customLabel in _options.CustomLabels)
-                    labels.Add(customLabel.Key);
+                labels.AddRange(_options.CustomLabels.Select(customLabel => customLabel.Key));
 
             _metricHelpText += string.Join(", ", labels);
             _histogram = _options.CollectorRegistry == null
@@ -67,27 +67,49 @@ namespace Prometheus.Client.HttpRequestDurations
                 return;
             }
 
+            var statusCode = context.Response.StatusCode.ToString();
+            var method = context.Request.Method;
             var watch = Stopwatch.StartNew();
-            await _next.Invoke(context);
+
+            try
+            {
+                await _next.Invoke(context);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "500")
+                {
+                    statusCode = ex.Message;
+                    watch.Stop();
+                    WriteMetrics();
+                }
+                throw;
+            }
             watch.Stop();
+            WriteMetrics();
+            
+            void WriteMetrics()
+            {
+                // Order is important
+                
+                var labelValues = new List<string>();
+                if (_options.IncludeStatusCode)
+                    labelValues.Add(statusCode);
 
-            // Order is important
+                if (_options.IncludeMethod)
+                    labelValues.Add(method);
 
-            var labelValues = new List<string>();
-            if (_options.IncludeStatusCode)
-                labelValues.Add(context.Response.StatusCode.ToString());
+                if (_options.IncludePath)
+                    labelValues.Add(path);
 
-            if (_options.IncludeMethod)
-                labelValues.Add(context.Request.Method);
+                if (_options.CustomLabels != null)
+                    foreach (var customLabel in _options.CustomLabels)
+                        labelValues.Add(customLabel.Value());
 
-            if (_options.IncludePath)
-                labelValues.Add(path);
-
-            if (_options.CustomLabels != null)
-                foreach (var customLabel in _options.CustomLabels)
-                    labelValues.Add(customLabel.Value());
-
-            _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
+                _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
+            }
         }
+        
+        
     }
 }
