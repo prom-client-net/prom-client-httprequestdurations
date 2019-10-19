@@ -8,7 +8,7 @@
     <TargetFrameworks>netstandard1.3;netstandard2.0;netcoreapp2.2</TargetFrameworks>
     <PackageId>Prometheus.Client.HttpRequestDurations</PackageId>
     <PackageTags>prometheus;metrics</PackageTags>
-    <PackageIconUrl>https://image.ibb.co/k4Sc0k/prometheus.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/PrometheusClientNet/Prometheus.Client.HttpRequestDurations</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
