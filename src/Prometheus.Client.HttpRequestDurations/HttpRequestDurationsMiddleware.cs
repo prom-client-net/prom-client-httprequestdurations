@@ -77,8 +77,7 @@ namespace Prometheus.Client.HttpRequestDurations
             }
             catch (Exception ex)
             {
-                if (ex.Message == "500")
-                    statusCode = ex.Message;
+                statusCode = "500";
                 throw;
             }
             finally
