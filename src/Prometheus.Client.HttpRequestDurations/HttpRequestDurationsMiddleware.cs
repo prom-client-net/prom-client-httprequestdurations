@@ -67,7 +67,7 @@ namespace Prometheus.Client.HttpRequestDurations
                 return;
             }
 
-            var statusCode = context.Response.StatusCode.ToString();
+            string statusCode = null;
             var method = context.Request.Method;
             var watch = Stopwatch.StartNew();
 
@@ -84,13 +84,15 @@ namespace Prometheus.Client.HttpRequestDurations
             finally
             {
                 watch.Stop();
+                if (string.IsNullOrEmpty(statusCode))
+                    statusCode = context.Response.StatusCode.ToString();
                 WriteMetrics();
             }
-            
+
             void WriteMetrics()
             {
                 // Order is important
-                
+
                 var labelValues = new List<string>();
                 if (_options.IncludeStatusCode)
                     labelValues.Add(statusCode);
@@ -108,7 +110,5 @@ namespace Prometheus.Client.HttpRequestDurations
                 _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
             }
         }
-        
-        
     }
 }
