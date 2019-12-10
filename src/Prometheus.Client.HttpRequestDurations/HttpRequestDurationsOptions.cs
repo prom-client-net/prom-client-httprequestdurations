@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
 using Prometheus.Client.Collectors.Abstractions;
 
 namespace Prometheus.Client.HttpRequestDurations
@@ -75,6 +76,8 @@ namespace Prometheus.Client.HttpRequestDurations
         ///    Include Custom Normalize Path
         /// </summary>
         public bool IncludeCustomNormalizePath => CustomNormalizePath != null;
+
+        public Func<HttpRequest, bool> ShouldMeasureRequest { get; set; }
 
         /// <summary>
         ///     Constructor
