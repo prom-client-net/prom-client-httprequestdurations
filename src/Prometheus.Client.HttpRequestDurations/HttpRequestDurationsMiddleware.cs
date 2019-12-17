@@ -75,45 +75,46 @@ namespace Prometheus.Client.HttpRequestDurations
 
             string statusCode = null;
             var method = context.Request.Method;
-            var watch = Stopwatch.StartNew();
+            var ts = Stopwatch.GetTimestamp();
 
             try
             {
                 await _next.Invoke(context);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 statusCode = "500";
                 throw;
             }
             finally
             {
-                watch.Stop();
                 if (string.IsNullOrEmpty(statusCode))
                     statusCode = context.Response.StatusCode.ToString();
-                WriteMetrics();
+
+                double ticks = Stopwatch.GetTimestamp() - ts;
+                WriteMetrics(statusCode, method, path, ticks / Stopwatch.Frequency);
             }
+        }
 
-            void WriteMetrics()
-            {
-                // Order is important
+        private void WriteMetrics(string statusCode, string method, string path, double elapsedSeconds)
+        {
+            // Order is important
 
-                var labelValues = new List<string>();
-                if (_options.IncludeStatusCode)
-                    labelValues.Add(statusCode);
+            var labelValues = new List<string>();
+            if (_options.IncludeStatusCode)
+                labelValues.Add(statusCode);
 
-                if (_options.IncludeMethod)
-                    labelValues.Add(method);
+            if (_options.IncludeMethod)
+                labelValues.Add(method);
 
-                if (_options.IncludePath)
-                    labelValues.Add(path);
+            if (_options.IncludePath)
+                labelValues.Add(path);
 
-                if (_options.CustomLabels != null)
-                    foreach (var customLabel in _options.CustomLabels)
-                        labelValues.Add(customLabel.Value());
+            if (_options.CustomLabels != null)
+                foreach (var customLabel in _options.CustomLabels)
+                    labelValues.Add(customLabel.Value());
 
-                _histogram.Labels(labelValues.ToArray()).Observe(watch.Elapsed.TotalSeconds);
-            }
+            _histogram.Labels(labelValues.ToArray()).Observe(elapsedSeconds);
         }
     }
 }
