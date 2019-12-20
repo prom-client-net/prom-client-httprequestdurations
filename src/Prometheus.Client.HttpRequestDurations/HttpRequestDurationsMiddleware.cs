@@ -67,6 +67,12 @@ namespace Prometheus.Client.HttpRequestDurations
                 return;
             }
 
+            if (_options.ShouldMeasureRequest != null && !_options.ShouldMeasureRequest(context.Request))
+            {
+                await _next.Invoke(context);
+                return;
+            }
+
             string statusCode = null;
             var method = context.Request.Method;
             var watch = Stopwatch.StartNew();
