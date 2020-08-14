@@ -1,5 +1,5 @@
+using System.Linq;
 using Microsoft.AspNetCore.Http;
-
 
 namespace Prometheus.Client.HttpRequestDurations.Tools
 {
@@ -9,8 +9,8 @@ namespace Prometheus.Client.HttpRequestDurations.Tools
         {
             var result = pathString.ToString().ToLowerInvariant();
             if (options.IncludeCustomNormalizePath)
-                foreach (var normalizePath in options.CustomNormalizePath)
-                    result = normalizePath.Key.Replace(result, normalizePath.Value);
+                result = options.CustomNormalizePath.Aggregate(result, (current, normalizePath) => normalizePath.Key.Replace(current, normalizePath.Value));
+
             return result;
         }
     }

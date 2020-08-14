@@ -66,7 +66,6 @@ namespace Prometheus.Client.HttpRequestDurations
         /// </summary>
         public Dictionary<Regex, string> CustomNormalizePath { get; set; }
 
-
         /// <summary>
         ///    Include Custom Labels
         /// </summary>
