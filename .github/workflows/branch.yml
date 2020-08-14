@@ -22,4 +22,4 @@ jobs:
       - name: Restore
         run: dotnet restore
       - name: Tests
-        run: dotnet test --Release
+        run: dotnet test --no-restore -c Release

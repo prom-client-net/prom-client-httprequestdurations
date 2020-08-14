@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: dotnet build --no-restore -c Release
       - name: Tests
-        run: dotnet test --Release --no-build
+        run: dotnet test -c --Release --no-build
       - name: Pack artifacts
         run: dotnet pack src/Prometheus.Client.HttpRequestDurations -c Release --no-build --version-suffix dev-$(date +%s) -o artifacts/
       - name: Publish artifacts
