@@ -11,10 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
-		appveyor.yml = appveyor.yml
 		.editorconfig = .editorconfig
-		pack.sh = pack.sh
-		nuget.config = nuget.config
+		Directory.Build.props = Directory.Build.props
+		stylecop.json = stylecop.json
+		.ruleset = .ruleset
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.HttpRequestDurations", "src\Prometheus.Client.HttpRequestDurations\Prometheus.Client.HttpRequestDurations.csproj", "{C0984EB8-6DB2-4FA7-85E3-7BD1417EF31F}"
