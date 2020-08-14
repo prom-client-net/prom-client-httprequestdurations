@@ -2,7 +2,7 @@
 
 [![NuGet](https://img.shields.io/nuget/v/Prometheus.Client.HttpRequestDurations.svg)](https://www.nuget.org/packages/Prometheus.Client.HttpRequestDurations)
 [![NuGet](https://img.shields.io/nuget/dt/Prometheus.Client.HttpRequestDurations.svg)](https://www.nuget.org/packages/Prometheus.Client.HttpRequestDurations)
-
+[![CI](https://github.com/PrometheusClientNet/Prometheus.Client.HttpRequestDurations/workflows/CI/badge.svg)](https://github.com/PrometheusClientNet/Prometheus.Client.HttpRequestDurations/actions?query=workflow%3ACI)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 
 ## Installation
