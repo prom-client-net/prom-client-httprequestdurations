@@ -76,6 +76,9 @@ namespace Prometheus.Client.HttpRequestDurations
         /// </summary>
         public bool IncludeCustomNormalizePath => CustomNormalizePath != null;
 
+        /// <summary>
+        ///    Should measure request
+        /// </summary>
         public Func<HttpRequest, bool> ShouldMeasureRequest { get; set; }
 
         /// <summary>

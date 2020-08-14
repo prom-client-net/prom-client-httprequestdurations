@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Prometheus.Client.Abstractions;
 using Prometheus.Client.HttpRequestDurations.Tools;
 
 namespace Prometheus.Client.HttpRequestDurations
@@ -13,16 +14,21 @@ namespace Prometheus.Client.HttpRequestDurations
     /// </summary>
     public class HttpRequestDurationsMiddleware
     {
-        private readonly Histogram _histogram;
+        private readonly IMetricFamily<IHistogram> _histogram;
         private readonly string _metricHelpText = "duration histogram of http responses labeled with: ";
 
         private readonly RequestDelegate _next;
         private readonly HttpRequestDurationsOptions _options;
+        private readonly IMetricFactory _metricFactory;
 
         public HttpRequestDurationsMiddleware(RequestDelegate next, HttpRequestDurationsOptions options)
         {
             _next = next;
             _options = options;
+
+            _metricFactory = _options.CollectorRegistry == null
+                ? Metrics.DefaultFactory
+                : new MetricFactory(_options.CollectorRegistry);
 
             var labels = new List<string>();
 
@@ -39,10 +45,7 @@ namespace Prometheus.Client.HttpRequestDurations
                 labels.AddRange(_options.CustomLabels.Select(customLabel => customLabel.Key));
 
             _metricHelpText += string.Join(", ", labels);
-            _histogram = _options.CollectorRegistry == null
-                ? Metrics.CreateHistogram(options.MetricName, _metricHelpText, _options.Buckets, labels.ToArray())
-                : Metrics.WithCustomRegistry(options.CollectorRegistry)
-                    .CreateHistogram(options.MetricName, _metricHelpText, _options.Buckets, labels.ToArray());
+            _histogram = _metricFactory.CreateHistogram(options.MetricName, _metricHelpText, _options.Buckets, labels.ToArray());
         }
 
         public async Task Invoke(HttpContext context)
@@ -116,7 +119,7 @@ namespace Prometheus.Client.HttpRequestDurations
                     labelValues.Add(customLabel.Value());
             }
 
-            _histogram.Labels(labelValues.ToArray()).Observe(elapsedSeconds);
+            _histogram.WithLabels(labelValues.ToArray()).Observe(elapsedSeconds);
         }
     }
 }
