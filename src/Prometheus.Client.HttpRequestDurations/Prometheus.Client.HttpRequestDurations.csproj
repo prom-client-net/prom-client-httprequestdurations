@@ -34,7 +34,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="4.0.0-dev-1597387737" />
+    <PackageReference Include="Prometheus.Client" Version="4.0.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
