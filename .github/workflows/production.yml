@@ -13,12 +13,14 @@ jobs:
         uses: actions/checkout@v1
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
+      - name: Restore
+        run: dotnet restore
       - name: Build
         run: dotnet build -c Release
       - name: Tests
         run: dotnet test -c Release --no-build
       - name: Pack artifacts
-        run: dotnet pack src/Prometheus.Client.HttpRequestDurations -c Release --no-build -o artifacts/
+        run: dotnet pack src/* -c Release --no-build -o artifacts/
       - name: Publish artifacts
         uses: actions/upload-artifact@v2
         with:
