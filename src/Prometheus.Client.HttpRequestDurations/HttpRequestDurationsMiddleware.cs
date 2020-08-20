@@ -19,16 +19,12 @@ namespace Prometheus.Client.HttpRequestDurations
 
         private readonly RequestDelegate _next;
         private readonly HttpRequestDurationsOptions _options;
-        private readonly IMetricFactory _metricFactory;
 
         public HttpRequestDurationsMiddleware(RequestDelegate next, HttpRequestDurationsOptions options)
         {
             _next = next;
             _options = options;
-
-            _metricFactory = _options.CollectorRegistry == null
-                ? Metrics.DefaultFactory
-                : new MetricFactory(_options.CollectorRegistry);
+            var metricFactory = new MetricFactory(options.CollectorRegistry);
 
             var labels = new List<string>();
 
@@ -45,7 +41,7 @@ namespace Prometheus.Client.HttpRequestDurations
                 labels.AddRange(_options.CustomLabels.Select(customLabel => customLabel.Key));
 
             _metricHelpText += string.Join(", ", labels);
-            _histogram = _metricFactory.CreateHistogram(options.MetricName, _metricHelpText, _options.Buckets, labels.ToArray());
+            _histogram = metricFactory.CreateHistogram(options.MetricName, _metricHelpText, _options.Buckets, labels.ToArray());
         }
 
         public async Task Invoke(HttpContext context)
