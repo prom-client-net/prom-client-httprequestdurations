@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
+using Prometheus.Client.Collectors.Abstractions;
 
 namespace Prometheus.Client.HttpRequestDurations
 {
@@ -23,6 +24,11 @@ namespace Prometheus.Client.HttpRequestDurations
         {
             var options = new HttpRequestDurationsOptions();
             setupOptions?.Invoke(options);
+
+            options.CollectorRegistry
+                ??= (ICollectorRegistry)app.ApplicationServices.GetService(typeof(ICollectorRegistry))
+                    ?? Metrics.DefaultCollectorRegistry;
+
             return app.UseMiddleware<HttpRequestDurationsMiddleware>(options);
         }
     }
