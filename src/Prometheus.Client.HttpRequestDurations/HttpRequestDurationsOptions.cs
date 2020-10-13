@@ -76,6 +76,13 @@ namespace Prometheus.Client.HttpRequestDurations
         /// </summary>
         public bool IncludeCustomNormalizePath => CustomNormalizePath != null;
 
+#if HasRoutes
+        /// <summary>
+        /// Try to use route name instead of raw url
+        /// </summary>
+        public bool UseRouteName { get; set; }
+#endif
+
         /// <summary>
         ///    Should measure request
         /// </summary>

@@ -42,4 +42,7 @@
   <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.1'">
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+    <DefineConstants>$(DefineConstants);HasRoutes;</DefineConstants>
+  </PropertyGroup>
 </Project>
