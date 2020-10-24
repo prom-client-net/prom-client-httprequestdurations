@@ -27,10 +27,12 @@ jobs:
         run: dotnet test --no-build -c Release
       - name: Pack artifacts
         run: dotnet pack src/* --no-build -c Release --version-suffix dev-$(date +%s) -o artifacts/
-      - name: Publish artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nupkg
           path: artifacts/*
       - name: Publish to GitHub
-        run: dotnet nuget push "artifacts/*.nupkg" --skip-duplicate --no-symbols true
+        run: |
+          dotnet tool install -g gpr --no-cache -v q
+          gpr push "artifacts/*.nupkg" -k ${{ secrets.GH_DEPLOY_KEY }} || true   
