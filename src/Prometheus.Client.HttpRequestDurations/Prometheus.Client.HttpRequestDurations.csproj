@@ -3,7 +3,7 @@
     <Description>Metrics logging of request durations for the Prometheus.Client</Description>
     <Copyright>2020 © Serge K, Oleksandr Poliakov</Copyright>
     <AssemblyTitle>Prometheus.Client.HttpRequestDurations</AssemblyTitle>
-    <VersionPrefix>3.1.0</VersionPrefix>
+    <VersionPrefix>3.2.0</VersionPrefix>
     <Authors>Serge K, Oleksandr Poliakov</Authors>
     <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp2.2;netcoreapp3.1</TargetFrameworks>
     <PackageId>Prometheus.Client.HttpRequestDurations</PackageId>
