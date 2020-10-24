@@ -51,7 +51,7 @@ namespace Prometheus.Client.HttpRequestDurations
                 ? context.GetRouteName()
                 : context.Request.Path.ToString();
 #else
-            string path = context.Request.Path.ToString();
+            var path = context.Request.Path.ToString();
 #endif
 
             path = NormalizePath.Execute(path, _options);
