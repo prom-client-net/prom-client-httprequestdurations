@@ -6,15 +6,15 @@
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 
 ## Installation
-
-	dotnet add package Prometheus.Client.HttpRequestDurations
-	
+```shell script
+dotnet add package Prometheus.Client.HttpRequestDurations
+```
 
 #### Use:
 
 There are [Examples](https://github.com/PrometheusClientNet/Prometheus.Client.Examples/tree/master/HttpRequestDurations)
 
-```csharp
+```c#
 app.UsePrometheusRequestDurations(q =>
 {
     q.IncludePath = true;
@@ -45,8 +45,11 @@ Contributions to the package are always welcome!
 
 ## Support
 
-If you are having problems, send a mail to [prometheus@phnx47.net](mailto://prometheus@phnx47.net). We will try to help you.
+I would also very much appreciate your support:
 
+<a href="https://www.buymeacoffee.com/phnx47"><img width="32px" src="https://raw.githubusercontent.com/phnx47/files/master/button-sponsors/bmac0.png" alt="Buy Me A Coffee"></a>
+<a href="https://ko-fi.com/phnx47"><img width="32px" src="https://raw.githubusercontent.com/phnx47/files/master/button-sponsors/kofi0.png" alt="Support me on ko-fi"></a>
+<a href="https://www.patreon.com/phnx47"><img width="32px" src="https://raw.githubusercontent.com/phnx47/files/master/button-sponsors/patreon0.png" alt="Support me on Patreon"></a>
 ## License
 
 All contents of this package are licensed under the [MIT license](https://opensource.org/licenses/MIT).
