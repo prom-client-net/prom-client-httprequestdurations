@@ -46,13 +46,13 @@ namespace Prometheus.Client.HttpRequestDurations
 
         public async Task Invoke(HttpContext context)
         {
+            var path = string.Empty;
 #if HasRoutes
-            var path = _options.UseRouteName
-                ? context.GetRouteName()
-                : context.Request.Path.ToString();
-#else
-            var path = context.Request.Path.ToString();
+            if(_options.UseRouteName)
+                path = context.GetRouteName();
 #endif
+            if (string.IsNullOrEmpty(path))
+                path = context.Request.Path.ToString();
 
             path = NormalizePath.Execute(path, _options);
 
