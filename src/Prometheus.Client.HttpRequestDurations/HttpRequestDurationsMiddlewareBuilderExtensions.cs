@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
-using Prometheus.Client.Collectors.Abstractions;
+using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.HttpRequestDurations
 {

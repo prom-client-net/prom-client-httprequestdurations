@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
-using Prometheus.Client.Collectors.Abstractions;
+using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.HttpRequestDurations
 {

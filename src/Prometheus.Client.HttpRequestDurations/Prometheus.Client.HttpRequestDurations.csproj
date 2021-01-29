@@ -3,9 +3,9 @@
     <Description>Metrics logging of request durations for the Prometheus.Client</Description>
     <Copyright>2020 © Serge K, Oleksandr Poliakov</Copyright>
     <AssemblyTitle>Prometheus.Client.HttpRequestDurations</AssemblyTitle>
-    <VersionPrefix>3.2.2</VersionPrefix>
+    <VersionPrefix>3.3.0</VersionPrefix>
     <Authors>Serge K, Oleksandr Poliakov</Authors>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp2.2;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1</TargetFrameworks>
     <PackageId>Prometheus.Client.HttpRequestDurations</PackageId>
     <PackageTags>prometheus;metrics</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
@@ -34,7 +34,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="4.2.0" />
+    <PackageReference Include="Prometheus.Client" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />

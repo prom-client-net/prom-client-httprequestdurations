@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Prometheus.Client.Abstractions;
 using Prometheus.Client.HttpRequestDurations.Tools;
 
 namespace Prometheus.Client.HttpRequestDurations

@@ -1,6 +1,6 @@
+#if HasRoutes
 using System;
 using Microsoft.AspNetCore.Http;
-#if HasRoutes
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
