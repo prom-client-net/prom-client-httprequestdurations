@@ -1,4 +1,4 @@
-name: CI
+name: CI Master
 
 on:
   push:
@@ -16,9 +16,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          source-url: https://nuget.pkg.github.com/prometheusclientnet/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.GH_DEPLOY_KEY}}
+          dotnet-version: '5.0.x'
       - name: Restore
         run: dotnet restore
       - name: Build
@@ -33,6 +31,4 @@ jobs:
           name: nupkg
           path: artifacts/*
       - name: Publish to GitHub
-        run: |
-          dotnet tool install -g gpr --no-cache -v q
-          gpr push "artifacts/*.nupkg" -k ${{ secrets.GH_DEPLOY_KEY }} || true   
+        run: dotnet nuget push "artifacts/*.nupkg" -s https://nuget.pkg.github.com/PrometheusClientNet/index.json -k ${{ secrets.GH_DEPLOY_KEY }} --skip-duplicate
