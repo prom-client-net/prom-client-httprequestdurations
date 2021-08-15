@@ -21,7 +21,7 @@ jobs:
       - name: 🧪 Tests
         run: dotnet test --no-build -c Release
       - name: 🗜 Pack artifacts
-        run: dotnet pack src/* --no-build -c Release --version-suffix dev-$(date +%s) -o artifacts/
+        run: dotnet pack src --no-build -c Release --version-suffix dev-$(date +%s) -o artifacts/
       - name: 🗄 Publish artifacts
         uses: actions/upload-artifact@v2
         with:
