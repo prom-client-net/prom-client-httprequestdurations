@@ -6,11 +6,12 @@
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT) 
 
 ## Installation
-```shell script
+
+```shell
 dotnet add package Prometheus.Client.HttpRequestDurations
 ```
 
-#### Use:
+## Use
 
 There are [Examples](https://github.com/prom-client-net/prom-examples/tree/master/HttpRequestDurations)
 
@@ -46,5 +47,3 @@ Contributions to the package are always welcome!
 ## License
 
 All contents of this package are licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-
