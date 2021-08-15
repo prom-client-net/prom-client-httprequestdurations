@@ -21,11 +21,11 @@ jobs:
       - name: 🧪 Tests
         run: dotnet test --no-build -c Release
       - name: 🗜 Pack artifacts
-        run: dotnet pack src/* -c Release --no-build -o artifacts/
+        run: dotnet pack src -c Release --no-build -o artifacts/
       - name: 🗄 Publish artifacts
         uses: actions/upload-artifact@v2
         with:
           name: nupkg
           path: artifacts/*
       - name: 📦 Publish to NuGet
-        run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push "artifacts/*.nupkg" -k ${{ secrets.NUGET_DEPLOY_KEY }} -s https://api.nuget.org/v3/index.json
