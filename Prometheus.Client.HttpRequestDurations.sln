@@ -28,9 +28,9 @@ EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{21EFD76E-3C92-4096-B10F-FB173186CAA3}"
 ProjectSection(SolutionItems) = preProject
-	.github\workflows\branch.yml = .github\workflows\branch.yml
+	.github\workflows\pr.yml = .github\workflows\pr.yml
 	.github\workflows\master.yml = .github\workflows\master.yml
-	.github\workflows\production.yml = .github\workflows\production.yml
+	.github\workflows\prod.yml = .github\workflows\prod.yml
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.HttpRequestDurations", "src\Prometheus.Client.HttpRequestDurations.csproj", "{48EFCAB0-80D4-4316-BD3D-929EB92D8730}"
