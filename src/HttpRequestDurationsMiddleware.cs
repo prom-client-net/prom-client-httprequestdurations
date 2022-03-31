@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -32,6 +32,14 @@ namespace Prometheus.Client.HttpRequestDurations
 
             if (_options.IncludeMethod)
                 labels.Add("method");
+
+#if HasRoutes
+            if (_options.IncludeController)
+                labels.Add("controller");
+
+            if (_options.IncludeAction)
+                labels.Add("action");
+#endif
 
             if (_options.IncludePath)
                 labels.Add("path");
@@ -81,6 +89,15 @@ namespace Prometheus.Client.HttpRequestDurations
 
             string statusCode = null;
             var method = context.Request.Method;
+
+            var controller = string.Empty;
+            var action = string.Empty;
+
+#if HasRoutes
+            controller = context.GetControllerName();
+            action = context.GetActionName();
+#endif
+
             var ts = Stopwatch.GetTimestamp();
 
             try
@@ -98,11 +115,11 @@ namespace Prometheus.Client.HttpRequestDurations
                     statusCode = context.Response.StatusCode.ToString();
 
                 double ticks = Stopwatch.GetTimestamp() - ts;
-                WriteMetrics(statusCode, method, path, ticks / Stopwatch.Frequency);
+                WriteMetrics(statusCode, method, controller, action, path, ticks / Stopwatch.Frequency);
             }
         }
 
-        private void WriteMetrics(string statusCode, string method, string path, double elapsedSeconds)
+        private void WriteMetrics(string statusCode, string method, string controller, string action, string path, double elapsedSeconds)
         {
             // Order is important
 
@@ -112,6 +129,14 @@ namespace Prometheus.Client.HttpRequestDurations
 
             if (_options.IncludeMethod)
                 labelValues.Add(method);
+
+#if HasRoutes
+            if (_options.IncludeController)
+                labelValues.Add(controller);
+
+            if (_options.IncludeAction)
+                labelValues.Add(action);
+#endif
 
             if (_options.IncludePath)
                 labelValues.Add(path);
