@@ -17,6 +17,13 @@ namespace Prometheus.Client.HttpRequestDurations
         public string MetricName { get; set; }
 
         /// <summary>
+        ///     <para>When true; the timestamp is added to the metric.</para>
+        ///     <para>When false; the timestamp is NOT added.</para>
+        ///     <para>Defaults to false.</para>
+        /// </summary>
+        public bool MetricTimestamp { get; set; } = false;
+
+        /// <summary>
         ///     HTTP status code (200, 400, 404 etc.)
         /// </summary>
         public bool IncludeStatusCode { get; set; }
