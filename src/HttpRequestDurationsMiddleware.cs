@@ -48,7 +48,7 @@ namespace Prometheus.Client.HttpRequestDurations
                 labels.AddRange(_options.CustomLabels.Select(customLabel => customLabel.Key));
 
             _metricHelpText += string.Join(", ", labels);
-            _histogram = metricFactory.CreateHistogram(options.MetricName, _metricHelpText, _options.Buckets, labels.ToArray());
+            _histogram = metricFactory.CreateHistogram(options.MetricName, _metricHelpText, options.IncludeTimestamp, options.Buckets, labels.ToArray());
         }
 
         public async Task Invoke(HttpContext context)
