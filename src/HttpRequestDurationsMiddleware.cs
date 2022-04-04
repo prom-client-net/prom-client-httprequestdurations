@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-//#if HasRoutes
+#if HasRoutes
 using Microsoft.AspNetCore.Routing;
-//#endif
+#endif
 using Prometheus.Client.HttpRequestDurations.Tools;
 
 namespace Prometheus.Client.HttpRequestDurations
