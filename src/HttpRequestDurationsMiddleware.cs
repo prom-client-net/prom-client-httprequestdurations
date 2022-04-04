@@ -4,6 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+//#if HasRoutes
+using Microsoft.AspNetCore.Routing;
+//#endif
 using Prometheus.Client.HttpRequestDurations.Tools;
 
 namespace Prometheus.Client.HttpRequestDurations
@@ -54,7 +57,12 @@ namespace Prometheus.Client.HttpRequestDurations
         public async Task Invoke(HttpContext context)
         {
             var path = string.Empty;
+
 #if HasRoutes
+            // If we are going to set labels for Controller or Action -- then we need to make them readily available
+            if (_options.IncludeController || _options.IncludeAction)
+                TryCaptureRouteData(context);
+
             if(_options.UseRouteName)
                 path = context.GetRouteName();
 #endif
@@ -149,5 +157,26 @@ namespace Prometheus.Client.HttpRequestDurations
 
             _histogram.WithLabels(labelValues.ToArray()).Observe(elapsedSeconds);
         }
+
+#if HasRoutes
+        private static void TryCaptureRouteData(HttpContext context)
+        {
+            var routeData = context.GetRouteData();
+
+            if (routeData == null || routeData.Values.Count == 0)
+            {
+                return;
+            }
+
+            var capturedRouteData = new CapturedRouteDataFeature();
+
+            foreach (var pair in routeData.Values)
+            {
+                capturedRouteData.Values.Add(pair.Key, pair.Value);
+            }
+
+            context.Features.Set<ICapturedRouteDataFeature>(capturedRouteData);
+        }
+#endif
     }
 }
