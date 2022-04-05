@@ -88,6 +88,16 @@ namespace Prometheus.Client.HttpRequestDurations
         /// Try to use route name instead of raw url
         /// </summary>
         public bool UseRouteName { get; set; }
+
+        /// <summary>
+        ///     Adds controller name as a metric label. Defaults to false.
+        /// </summary>
+        public bool IncludeController { get; set; } = false;
+
+        /// <summary>
+        ///     Adds action name as a metric label. Defaults to false.
+        /// </summary>
+        public bool IncludeAction { get; set; } = false;
 #endif
 
         /// <summary>
