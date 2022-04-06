@@ -44,13 +44,7 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
         {
             var pathString = $"/path/to/{id}/next";
 
-            var options = new HttpRequestDurationsOptions
-            {
-                CustomNormalizePath = new Dictionary<Regex, string>
-                {
-                    { _intRegex, _intValue }
-                }
-            };
+            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _intRegex, _intValue } } };
 
             var path = NormalizePath.Execute(pathString, options);
             Assert.Equal($"/path/to/id/next", path);
@@ -62,13 +56,7 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
         {
             var pathString = $"/path/to/{id}";
 
-            var options = new HttpRequestDurationsOptions
-            {
-                CustomNormalizePath = new Dictionary<Regex, string>
-                {
-                    { _intRegex, _intValue }
-                }
-            };
+            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _intRegex, _intValue } } };
 
             var path = NormalizePath.Execute(pathString, options);
             Assert.Equal($"/path/to/id", path);
@@ -80,13 +68,7 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
         {
             var pathString = $"/path/to/{id}/";
 
-            var options = new HttpRequestDurationsOptions
-            {
-                CustomNormalizePath = new Dictionary<Regex, string>
-                {
-                    { _intRegex, _intValue }
-                }
-            };
+            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _intRegex, _intValue } } };
 
             var path = NormalizePath.Execute(pathString, options);
             Assert.Equal($"/path/to/id/", path);
@@ -98,13 +80,7 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
         {
             var pathString = $"/path/to/{guid}/next";
 
-            var options = new HttpRequestDurationsOptions
-            {
-                CustomNormalizePath = new Dictionary<Regex, string>
-                {
-                    { _guidRegex, _guidValue }
-                }
-            };
+            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _guidRegex, _guidValue } } };
 
             var path = NormalizePath.Execute(pathString, options);
             Assert.Equal($"/path/to/guid/next", path);
@@ -116,13 +92,7 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
         {
             var pathString = $"/path/to/{guid}";
 
-            var options = new HttpRequestDurationsOptions
-            {
-                CustomNormalizePath = new Dictionary<Regex, string>
-                {
-                    { _guidRegex, _guidValue }
-                }
-            };
+            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _guidRegex, _guidValue } } };
 
             var path = NormalizePath.Execute(pathString, options);
             Assert.Equal($"/path/to/guid", path);
@@ -134,13 +104,7 @@ namespace Prometheus.Client.HttpRequestDurations.Tests
         {
             var pathString = $"/path/to/{guid}/";
 
-            var options = new HttpRequestDurationsOptions
-            {
-                CustomNormalizePath = new Dictionary<Regex, string>
-                {
-                    { _guidRegex, _guidValue }
-                }
-            };
+            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _guidRegex, _guidValue } } };
 
             var path = NormalizePath.Execute(pathString, options);
             Assert.Equal($"/path/to/guid/", path);

@@ -63,7 +63,7 @@ namespace Prometheus.Client.HttpRequestDurations
             if (_options.IncludeController || _options.IncludeAction)
                 TryCaptureRouteData(context);
 
-            if(_options.UseRouteName)
+            if (_options.UseRouteName)
                 path = context.GetRouteName();
 #endif
             if (string.IsNullOrEmpty(path))
@@ -163,16 +163,16 @@ namespace Prometheus.Client.HttpRequestDurations
         {
             var routeData = context.GetRouteData();
 
-            if (routeData == null || routeData.Values.Count == 0)
+            if (routeData.Values.Count == 0)
             {
                 return;
             }
 
             var capturedRouteData = new CapturedRouteDataFeature();
 
-            foreach (var pair in routeData.Values)
+            foreach ((string key, object value) in routeData.Values)
             {
-                capturedRouteData.Values.Add(pair.Key, pair.Value);
+                capturedRouteData.Values.Add(key, value);
             }
 
             context.Features.Set<ICapturedRouteDataFeature>(capturedRouteData);

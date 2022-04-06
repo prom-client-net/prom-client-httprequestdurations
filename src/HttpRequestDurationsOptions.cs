@@ -21,7 +21,7 @@ namespace Prometheus.Client.HttpRequestDurations
         ///     <para>When false; the timestamp is NOT added.</para>
         ///     <para>Defaults to false.</para>
         /// </summary>
-        public bool IncludeTimestamp { get; set; } = false;
+        public bool IncludeTimestamp { get; set; }
 
         /// <summary>
         ///     HTTP status code (200, 400, 404 etc.)
@@ -92,12 +92,12 @@ namespace Prometheus.Client.HttpRequestDurations
         /// <summary>
         ///     Adds controller name as a metric label. Defaults to false.
         /// </summary>
-        public bool IncludeController { get; set; } = false;
+        public bool IncludeController { get; set; }
 
         /// <summary>
         ///     Adds action name as a metric label. Defaults to false.
         /// </summary>
-        public bool IncludeAction { get; set; } = false;
+        public bool IncludeAction { get; set; }
 #endif
 
         /// <summary>
