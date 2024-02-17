@@ -3,36 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B922FA4B-1584-4EA7-8656-F9034FB45F9D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{285A8931-C09A-482E-9EF3-D90AA616A0FD}"
-	ProjectSection(SolutionItems) = preProject
-		.gitattributes = .gitattributes
-		.gitignore = .gitignore
-		LICENSE = LICENSE
-		README.md = README.md
-		.editorconfig = .editorconfig
-		Directory.Build.props = Directory.Build.props
-		stylecop.json = stylecop.json
-		.ruleset = .ruleset
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AAD0EF6F-D1C4-4C13-97A5-2E2E529E4384}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{18B27F0A-D773-484C-AE43-FB75DC596B00}"
-ProjectSection(SolutionItems) = preProject
-	.github\CODEOWNERS = .github\CODEOWNERS
-	.github\FUNDING.yml = .github\FUNDING.yml
-	.github\renovate.json = .github\renovate.json
-EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{21EFD76E-3C92-4096-B10F-FB173186CAA3}"
-ProjectSection(SolutionItems) = preProject
-	.github\workflows\pr.yml = .github\workflows\pr.yml
-	.github\workflows\master.yml = .github\workflows\master.yml
-	.github\workflows\prod.yml = .github\workflows\prod.yml
-EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.HttpRequestDurations", "src\Prometheus.Client.HttpRequestDurations.csproj", "{48EFCAB0-80D4-4316-BD3D-929EB92D8730}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prometheus.Client.HttpRequestDurations.Tests", "tests\Prometheus.Client.HttpRequestDurations.Tests.csproj", "{AC0B554A-0218-4E50-A6E2-CFCDF60C0545}"
@@ -56,9 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{21EFD76E-3C92-4096-B10F-FB173186CAA3} = {18B27F0A-D773-484C-AE43-FB75DC596B00}
-		{48EFCAB0-80D4-4316-BD3D-929EB92D8730} = {B922FA4B-1584-4EA7-8656-F9034FB45F9D}
-		{AC0B554A-0218-4E50-A6E2-CFCDF60C0545} = {AAD0EF6F-D1C4-4C13-97A5-2E2E529E4384}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {122FC3C2-0B76-492D-98B6-0E610316031E}

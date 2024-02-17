@@ -1,83 +1,78 @@
-#if HasRoutes
 using System;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
-#endif
 
-namespace Prometheus.Client.HttpRequestDurations.Tools
+namespace Prometheus.Client.HttpRequestDurations.Tools;
+
+internal static class HttpContextExtensions
 {
-    internal static class HttpContextExtensions
+    public static string GetRouteName(this HttpContext httpContext)
     {
-#if HasRoutes
-        public static string GetRouteName(this HttpContext httpContext)
+        if (httpContext == null)
+            throw new ArgumentNullException(nameof(httpContext));
+
+        var endpoint = httpContext.GetEndpoint();
+
+        var result = endpoint?.Metadata.GetMetadata<RouteNameMetadata>()?.RouteName;
+
+        if (string.IsNullOrEmpty(result))
         {
-            if (httpContext == null)
-                throw new ArgumentNullException(nameof(httpContext));
+            var routeAttribute = endpoint?.Metadata.GetMetadata<RouteAttribute>();
+            var methodAttribute = endpoint?.Metadata.GetMetadata<HttpMethodAttribute>();
 
-            var endpoint = httpContext.GetEndpoint();
-
-            var result = endpoint?.Metadata.GetMetadata<RouteNameMetadata>()?.RouteName;
-
-            if (string.IsNullOrEmpty(result))
-            {
-                var routeAttribute = endpoint?.Metadata.GetMetadata<RouteAttribute>();
-                var methodAttribute = endpoint?.Metadata.GetMetadata<HttpMethodAttribute>();
-
-                result = $"{routeAttribute?.Template}{methodAttribute?.Template}";
-            }
-
-            return result;
+            result = $"{routeAttribute?.Template}{methodAttribute?.Template}";
         }
 
-        /// <summary>
-        /// Attempt to determine the controller name
-        /// </summary>
-        /// <param name="httpContext">Http Context</param>
-        /// <returns>Name of the controller if identified; returns 'NotAvailable' if unable to be located.</returns>
-        public static string GetControllerName(this HttpContext httpContext) => GetRouteDataKeyValue(httpContext, "controller");
+        return result;
+    }
 
-        /// <summary>
-        /// Attempt to determine the action (method) name
-        /// </summary>
-        /// <param name="httpContext">Http Context</param>
-        /// <returns>Name of the action if identified; returns 'NotAvailable' if unable to be located.</returns>
-        public static string GetActionName(this HttpContext httpContext) => GetRouteDataKeyValue(httpContext, "action");
+    /// <summary>
+    /// Attempt to determine the controller name
+    /// </summary>
+    /// <param name="httpContext">Http Context</param>
+    /// <returns>Name of the controller if identified; returns 'NotAvailable' if unable to be located.</returns>
+    public static string GetControllerName(this HttpContext httpContext) => GetRouteDataKeyValue(httpContext, "controller");
 
-        private static string GetRouteDataKeyValue(this HttpContext httpContext, string routeDataKey)
+    /// <summary>
+    /// Attempt to determine the action (method) name
+    /// </summary>
+    /// <param name="httpContext">Http Context</param>
+    /// <returns>Name of the action if identified; returns 'NotAvailable' if unable to be located.</returns>
+    public static string GetActionName(this HttpContext httpContext) => GetRouteDataKeyValue(httpContext, "action");
+
+    private static string GetRouteDataKeyValue(this HttpContext httpContext, string routeDataKey)
+    {
+        const string notFoundResult = "NotAvailable";
+
+        if (httpContext == null)
+            throw new ArgumentNullException(nameof(httpContext));
+
+        var routeData = httpContext.Features.Get<ICapturedRouteDataFeature>()?.Values;
+
+        // If we have captured route data, we always prefer it.
+        // Otherwise, we extract new route data right now.
+        if (routeData == null)
+            routeData = httpContext.GetRouteData()?.Values;
+
+        if (routeData?.Values.Count > 0)
         {
-            const string notFoundResult = "NotAvailable";
+            var result = string.Empty;
 
-            if (httpContext == null)
-                throw new ArgumentNullException(nameof(httpContext));
-
-            var routeData = httpContext.Features.Get<ICapturedRouteDataFeature>()?.Values;
-
-            // If we have captured route data, we always prefer it.
-            // Otherwise, we extract new route data right now.
-            if (routeData == null)
-                routeData = httpContext.GetRouteData()?.Values;
-
-            if (routeData?.Values.Count > 0)
+            foreach (var item in routeData)
             {
-                var result = string.Empty;
-
-                foreach (var item in routeData)
+                if (item.Key == routeDataKey)
                 {
-                    if (item.Key == routeDataKey)
-                    {
-                        result = item.Value?.ToString();
-                        break;
-                    }
+                    result = item.Value?.ToString();
+                    break;
                 }
-
-                if (!string.IsNullOrEmpty(result))
-                    return result;
             }
 
-            return notFoundResult;
+            if (!string.IsNullOrEmpty(result))
+                return result;
         }
-#endif
+
+        return notFoundResult;
     }
 }

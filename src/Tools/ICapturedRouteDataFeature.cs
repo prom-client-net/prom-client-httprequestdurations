@@ -1,11 +1,8 @@
-#if HasRoutes
 using Microsoft.AspNetCore.Routing;
 
-namespace Prometheus.Client.HttpRequestDurations.Tools
+namespace Prometheus.Client.HttpRequestDurations.Tools;
+
+internal interface ICapturedRouteDataFeature
 {
-    internal interface ICapturedRouteDataFeature
-    {
-        RouteValueDictionary Values { get; }
-    }
+    RouteValueDictionary Values { get; }
 }
-#endif
