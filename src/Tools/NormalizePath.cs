@@ -1,16 +1,15 @@
 using System.Linq;
 
-namespace Prometheus.Client.HttpRequestDurations.Tools
-{
-    internal static class NormalizePath
-    {
-        public static string Execute(string pathString, HttpRequestDurationsOptions options)
-        {
-            var result = pathString.ToLowerInvariant();
-            if (options.IncludeCustomNormalizePath)
-                result = options.CustomNormalizePath.Aggregate(result, (current, normalizePath) => normalizePath.Key.Replace(current, normalizePath.Value));
+namespace Prometheus.Client.HttpRequestDurations.Tools;
 
-            return result;
-        }
+internal static class NormalizePath
+{
+    public static string Execute(string pathString, HttpRequestDurationsOptions options)
+    {
+        var result = pathString.ToLowerInvariant();
+        if (options.IncludeCustomNormalizePath)
+            result = options.CustomNormalizePath.Aggregate(result, (current, normalizePath) => normalizePath.Key.Replace(current, normalizePath.Value));
+
+        return result;
     }
 }

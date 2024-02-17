@@ -4,110 +4,109 @@ using System.Text.RegularExpressions;
 using Prometheus.Client.HttpRequestDurations.Tools;
 using Xunit;
 
-namespace Prometheus.Client.HttpRequestDurations.Tests
+namespace Prometheus.Client.HttpRequestDurations.Tests;
+
+public class NormalizePathTests
 {
-    public class NormalizePathTests
+    private static readonly Regex _intRegex = new(@"\/[0-9]{1,}(?![a-z])", RegexOptions.Compiled);
+    private const string _intValue = "/id";
+
+    private static readonly Regex _guidRegex = new(@"\/[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}", RegexOptions.Compiled);
+    private const string _guidValue = "/guid";
+
+    public static IEnumerable<object[]> GetInt()
     {
-        private static readonly Regex _intRegex = new Regex(@"\/[0-9]{1,}(?![a-z])", RegexOptions.Compiled);
-        private const string _intValue = "/id";
+        // ID - can't be less 0
+        yield return new object[] { 2 };
+        yield return new object[] { 0 };
+        yield return new object[] { 4 };
+        yield return new object[] { 648 };
 
-        private static readonly Regex _guidRegex = new Regex(@"\/[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}", RegexOptions.Compiled);
-        private const string _guidValue = "/guid";
+        var rnd = new Random();
 
-        public static IEnumerable<object[]> GetInt()
-        {
-            // ID - can't be less 0
-            yield return new object[] { 2 };
-            yield return new object[] { 0 };
-            yield return new object[] { 4 };
-            yield return new object[] { 648 };
+        yield return new object[] { rnd.Next(0, int.MaxValue) };
+        yield return new object[] { rnd.Next(0, int.MaxValue) };
+        yield return new object[] { rnd.Next(0, int.MaxValue) };
+    }
 
-            var rnd = new Random();
+    public static IEnumerable<object[]> GetGuid()
+    {
+        yield return new object[] { Guid.NewGuid().ToString() };
+        yield return new object[] { Guid.NewGuid().ToString() };
+        yield return new object[] { Guid.NewGuid().ToString() };
+        yield return new object[] { Guid.NewGuid().ToString() };
+        yield return new object[] { Guid.NewGuid().ToString() };
+    }
 
-            yield return new object[] { rnd.Next(0, int.MaxValue) };
-            yield return new object[] { rnd.Next(0, int.MaxValue) };
-            yield return new object[] { rnd.Next(0, int.MaxValue) };
-        }
+    [Theory]
+    [MemberData(nameof(GetInt))]
+    public void Int_Center(uint id)
+    {
+        var pathString = $"/path/to/{id}/next";
 
-        public static IEnumerable<object[]> GetGuid()
-        {
-            yield return new object[] { Guid.NewGuid().ToString() };
-            yield return new object[] { Guid.NewGuid().ToString() };
-            yield return new object[] { Guid.NewGuid().ToString() };
-            yield return new object[] { Guid.NewGuid().ToString() };
-            yield return new object[] { Guid.NewGuid().ToString() };
-        }
+        var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _intRegex, _intValue } } };
 
-        [Theory]
-        [MemberData(nameof(GetInt))]
-        public void Int_Center(uint id)
-        {
-            var pathString = $"/path/to/{id}/next";
+        var path = NormalizePath.Execute(pathString, options);
+        Assert.Equal($"/path/to/id/next", path);
+    }
 
-            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _intRegex, _intValue } } };
+    [Theory]
+    [MemberData(nameof(GetInt))]
+    public void Int_Right(uint id) // ID - can't be less 0
+    {
+        var pathString = $"/path/to/{id}";
 
-            var path = NormalizePath.Execute(pathString, options);
-            Assert.Equal($"/path/to/id/next", path);
-        }
+        var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _intRegex, _intValue } } };
 
-        [Theory]
-        [MemberData(nameof(GetInt))]
-        public void Int_Right(uint id) // ID - can't be less 0
-        {
-            var pathString = $"/path/to/{id}";
+        var path = NormalizePath.Execute(pathString, options);
+        Assert.Equal($"/path/to/id", path);
+    }
 
-            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _intRegex, _intValue } } };
+    [Theory]
+    [MemberData(nameof(GetInt))]
+    public void Int_Right_WithSlash(uint id) // ID - can't be less 0
+    {
+        var pathString = $"/path/to/{id}/";
 
-            var path = NormalizePath.Execute(pathString, options);
-            Assert.Equal($"/path/to/id", path);
-        }
+        var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _intRegex, _intValue } } };
 
-        [Theory]
-        [MemberData(nameof(GetInt))]
-        public void Int_Right_WithSlash(uint id) // ID - can't be less 0
-        {
-            var pathString = $"/path/to/{id}/";
+        var path = NormalizePath.Execute(pathString, options);
+        Assert.Equal($"/path/to/id/", path);
+    }
 
-            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _intRegex, _intValue } } };
+    [Theory]
+    [MemberData(nameof(GetGuid))]
+    public void Guid_Center(string guid)
+    {
+        var pathString = $"/path/to/{guid}/next";
 
-            var path = NormalizePath.Execute(pathString, options);
-            Assert.Equal($"/path/to/id/", path);
-        }
+        var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _guidRegex, _guidValue } } };
 
-        [Theory]
-        [MemberData(nameof(GetGuid))]
-        public void Guid_Center(string guid)
-        {
-            var pathString = $"/path/to/{guid}/next";
+        var path = NormalizePath.Execute(pathString, options);
+        Assert.Equal($"/path/to/guid/next", path);
+    }
 
-            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _guidRegex, _guidValue } } };
+    [Theory]
+    [MemberData(nameof(GetGuid))]
+    public void Guid_Right(string guid)
+    {
+        var pathString = $"/path/to/{guid}";
 
-            var path = NormalizePath.Execute(pathString, options);
-            Assert.Equal($"/path/to/guid/next", path);
-        }
+        var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _guidRegex, _guidValue } } };
 
-        [Theory]
-        [MemberData(nameof(GetGuid))]
-        public void Guid_Right(string guid)
-        {
-            var pathString = $"/path/to/{guid}";
+        var path = NormalizePath.Execute(pathString, options);
+        Assert.Equal($"/path/to/guid", path);
+    }
 
-            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _guidRegex, _guidValue } } };
+    [Theory]
+    [MemberData(nameof(GetGuid))]
+    public void Guid_Right_WithSlash(string guid)
+    {
+        var pathString = $"/path/to/{guid}/";
 
-            var path = NormalizePath.Execute(pathString, options);
-            Assert.Equal($"/path/to/guid", path);
-        }
+        var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _guidRegex, _guidValue } } };
 
-        [Theory]
-        [MemberData(nameof(GetGuid))]
-        public void Guid_Right_WithSlash(string guid)
-        {
-            var pathString = $"/path/to/{guid}/";
-
-            var options = new HttpRequestDurationsOptions { CustomNormalizePath = new Dictionary<Regex, string> { { _guidRegex, _guidValue } } };
-
-            var path = NormalizePath.Execute(pathString, options);
-            Assert.Equal($"/path/to/guid/", path);
-        }
+        var path = NormalizePath.Execute(pathString, options);
+        Assert.Equal($"/path/to/guid/", path);
     }
 }

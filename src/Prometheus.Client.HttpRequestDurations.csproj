@@ -1,27 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Metrics logging of request durations for the Prometheus.Client</Description>
-    <VersionPrefix>3.6.0</VersionPrefix>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
-    <PackageId>Prometheus.Client.HttpRequestDurations</PackageId>
+    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
     <RepositoryUrl>https://github.com/prom-client-net/prom-client-httprequestdurations</RepositoryUrl>
-    <AssemblyOriginatorKeyFile>../Prometheus.Client.HttpRequestDurations.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="../icon.png" Visible="false" Pack="true" PackagePath="" />
-    <None Include="../README.md" Visible="false"  Pack="true" PackagePath="" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Prometheus.Client" Version="[5.0.0,6.0.0)" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' OR '$(TargetFramework)' == 'net5.0' OR '$(TargetFramework)' == 'net6.0'">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Prometheus.Client" Version="5.2.0" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.1' AND '$(TargetFramework)' != 'net5.0' AND '$(TargetFramework)' != 'net6.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="System.Text.Encodings.Web" Version="4.5.1" />
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(MSBuildProjectName).Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010043c098de06c8d023082f50046903a938a6357a83ac284dc6caaa4522d1dd4febe72ff9287e2db59bee71183be94be70cc8199e80c38c6bf970037839748071b1628c76fe975e803d31f6f59ff710d4a83bb78783d69ae06db640234a01b7b78707e185c8a8b50641e42335d309f82a311ae8b48d957a6c563e23c1f76108008d" />
   </ItemGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1' OR '$(TargetFramework)' == 'net5.0' OR '$(TargetFramework)' == 'net6.0'">
-    <DefineConstants>$(DefineConstants);HasRoutes;</DefineConstants>
-  </PropertyGroup>
 </Project>
