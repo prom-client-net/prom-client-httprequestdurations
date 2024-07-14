@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Prometheus.Client.HttpRequestDurations.Tools;
 
 namespace Prometheus.Client.HttpRequestDurations;
 

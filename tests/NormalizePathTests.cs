@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Prometheus.Client.HttpRequestDurations.Tools;
 using Xunit;
 
 namespace Prometheus.Client.HttpRequestDurations.Tests;

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 
-namespace Prometheus.Client.HttpRequestDurations.Tools;
+namespace Prometheus.Client.HttpRequestDurations;
 
 internal static class HttpContextExtensions
 {

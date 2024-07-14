@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Routing;
 
-namespace Prometheus.Client.HttpRequestDurations.Tools;
+namespace Prometheus.Client.HttpRequestDurations;
 
 internal class CapturedRouteDataFeature
 {
