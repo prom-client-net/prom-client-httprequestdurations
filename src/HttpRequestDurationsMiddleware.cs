@@ -161,6 +161,6 @@ public class HttpRequestDurationsMiddleware
             capturedRouteData.Values.Add(key, value);
         }
 
-        context.Features.Set<ICapturedRouteDataFeature>(capturedRouteData);
+        context.Features.Set(capturedRouteData);
     }
 }

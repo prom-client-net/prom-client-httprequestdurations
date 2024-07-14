@@ -49,7 +49,7 @@ internal static class HttpContextExtensions
         if (httpContext == null)
             throw new ArgumentNullException(nameof(httpContext));
 
-        var routeData = httpContext.Features.Get<ICapturedRouteDataFeature>()?.Values;
+        var routeData = httpContext.Features.Get<CapturedRouteDataFeature>()?.Values;
 
         // If we have captured route data, we always prefer it.
         // Otherwise, we extract new route data right now.
