@@ -7,10 +7,12 @@ using Prometheus.Client.Collectors;
 namespace Prometheus.Client.HttpRequestDurations;
 
 /// <summary>
-///     Options for RequestDurationsMiddleware
+///     Options for HttpRequestDurationsMiddleware
 /// </summary>
 public class HttpRequestDurationsOptions
 {
+    internal const string DefaultMetricName = "http_request_duration_seconds";
+
     /// <summary>
     ///     Metric name
     /// </summary>
@@ -108,7 +110,7 @@ public class HttpRequestDurationsOptions
     /// </summary>
     public HttpRequestDurationsOptions()
     {
-        MetricName = "http_request_duration_seconds";
+        MetricName = DefaultMetricName;
 
         IncludeStatusCode = true;
         IncludeMethod = false;
