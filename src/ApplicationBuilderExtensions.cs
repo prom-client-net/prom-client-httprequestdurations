@@ -22,6 +22,9 @@ public static class ApplicationBuilderExtensions
     /// <param name="setupOptions">Setup Options</param>
     public static IApplicationBuilder UsePrometheusRequestDurations(this IApplicationBuilder app, Action<HttpRequestDurationsOptions> setupOptions)
     {
+        if (app == null)
+            throw new ArgumentNullException(nameof(app));
+
         var options = new HttpRequestDurationsOptions();
         setupOptions?.Invoke(options);
 
