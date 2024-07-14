@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -44,35 +45,27 @@ internal static class HttpContextExtensions
 
     private static string GetRouteDataKeyValue(this HttpContext httpContext, string routeDataKey)
     {
-        const string notFoundResult = "NotAvailable";
-
         if (httpContext == null)
             throw new ArgumentNullException(nameof(httpContext));
 
-        var routeData = httpContext.Features.Get<CapturedRouteDataFeature>()?.Values;
-
         // If we have captured route data, we always prefer it.
         // Otherwise, we extract new route data right now.
-        if (routeData == null)
-            routeData = httpContext.GetRouteData()?.Values;
+        var routeData = httpContext.Features.Get<RouteDataFeature>()?.Values ?? httpContext.GetRouteData().Values;
 
-        if (routeData?.Values.Count > 0)
+        if (routeData.Values.Count > 0)
         {
             var result = string.Empty;
 
-            foreach (var item in routeData)
+            foreach (var item in routeData.Where(item => item.Key == routeDataKey))
             {
-                if (item.Key == routeDataKey)
-                {
-                    result = item.Value?.ToString();
-                    break;
-                }
+                result = item.Value?.ToString();
+                break;
             }
 
             if (!string.IsNullOrEmpty(result))
                 return result;
         }
 
-        return notFoundResult;
+        return "NotAvailable";
     }
 }

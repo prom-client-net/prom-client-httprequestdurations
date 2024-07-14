@@ -136,10 +136,7 @@ public class HttpRequestDurationsMiddleware
             labelValues.Add(path);
 
         if (_options.CustomLabels != null)
-        {
-            foreach (var customLabel in _options.CustomLabels)
-                labelValues.Add(customLabel.Value());
-        }
+            labelValues.AddRange(_options.CustomLabels.Select(customLabel => customLabel.Value()));
 
         _histogram.WithLabels(labelValues.ToArray()).Observe(elapsedSeconds);
     }
@@ -149,16 +146,12 @@ public class HttpRequestDurationsMiddleware
         var routeData = context.GetRouteData();
 
         if (routeData.Values.Count == 0)
-        {
             return;
-        }
 
-        var capturedRouteData = new CapturedRouteDataFeature();
+        var capturedRouteData = new RouteDataFeature();
 
         foreach ((string key, object value) in routeData.Values)
-        {
             capturedRouteData.Values.Add(key, value);
-        }
 
         context.Features.Set(capturedRouteData);
     }
