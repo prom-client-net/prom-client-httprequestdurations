@@ -4,7 +4,7 @@ using Prometheus.Client.Collectors;
 
 namespace Prometheus.Client.HttpRequestDurations;
 
-public static class PrometheusMiddlewareBuilderExtensions
+public static class ApplicationBuilderExtensions
 {
     /// <summary>
     ///     Metrics logging of request durations

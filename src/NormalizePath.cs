@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace Prometheus.Client.HttpRequestDurations.Tools;
+namespace Prometheus.Client.HttpRequestDurations;
 
 internal static class NormalizePath
 {
