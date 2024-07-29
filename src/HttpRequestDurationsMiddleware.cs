@@ -28,19 +28,19 @@ public class HttpRequestDurationsMiddleware
         var labels = new List<string>();
 
         if (_options.IncludeStatusCode)
-            labels.Add("status_code");
+            labels.Add(Defaults.LabelNames.StatusCode);
 
         if (_options.IncludeMethod)
-            labels.Add("method");
+            labels.Add(Defaults.LabelNames.Method);
 
         if (_options.IncludeController)
-            labels.Add("controller");
+            labels.Add(Defaults.LabelNames.Controller);
 
         if (_options.IncludeAction)
-            labels.Add("action");
+            labels.Add(Defaults.LabelNames.Action);
 
         if (_options.IncludePath)
-            labels.Add("path");
+            labels.Add(Defaults.LabelNames.Path);
 
         if (_options.IncludeCustomLabels)
             labels.AddRange(_options.CustomLabels.Select(customLabel => customLabel.Key));

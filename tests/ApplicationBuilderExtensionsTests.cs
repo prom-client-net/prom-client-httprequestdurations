@@ -34,7 +34,7 @@ public class ApplicationBuilderExtensionsTests
         app.UsePrometheusRequestDurations();
         app.Build();
 
-        Assert.True(Metrics.DefaultCollectorRegistry.TryGet(HttpRequestDurationsOptions.DefaultMetricName, out var defaultCollector));
+        Assert.True(Metrics.DefaultCollectorRegistry.TryGet(Defaults.MetricName, out var defaultCollector));
 
         // Cleanup
         Metrics.DefaultCollectorRegistry?.Remove(defaultCollector);
@@ -49,9 +49,9 @@ public class ApplicationBuilderExtensionsTests
         app.UsePrometheusRequestDurations();
         app.Build();
 
-        Assert.True(registry.TryGet(HttpRequestDurationsOptions.DefaultMetricName, out _));
+        Assert.True(registry.TryGet(Defaults.MetricName, out _));
 
-        Assert.False(Metrics.DefaultCollectorRegistry.TryGet(HttpRequestDurationsOptions.DefaultMetricName, out _));
+        Assert.False(Metrics.DefaultCollectorRegistry.TryGet(Defaults.MetricName, out _));
     }
 
     [Fact]
@@ -63,8 +63,8 @@ public class ApplicationBuilderExtensionsTests
         app.UsePrometheusRequestDurations(q => q.CollectorRegistry = registry);
         app.Build();
 
-        Assert.True(registry.TryGet(HttpRequestDurationsOptions.DefaultMetricName, out _));
+        Assert.True(registry.TryGet(Defaults.MetricName, out _));
 
-        Assert.False(Metrics.DefaultCollectorRegistry.TryGet(HttpRequestDurationsOptions.DefaultMetricName, out _));
+        Assert.False(Metrics.DefaultCollectorRegistry.TryGet(Defaults.MetricName, out _));
     }
 }
