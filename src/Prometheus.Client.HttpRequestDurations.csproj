@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Metrics logging of request durations for the Prometheus.Client</Description>
+    <Description>HTTP request durations for the Prometheus.Client</Description>
     <TargetFramework>net6.0</TargetFramework>
     <RepositoryUrl>https://github.com/prom-client-net/prom-client-httprequestdurations</RepositoryUrl>
   </PropertyGroup>
