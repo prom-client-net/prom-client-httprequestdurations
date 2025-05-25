@@ -1,15 +1,14 @@
 using System;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Prometheus.Client.Collectors;
 using Xunit;
 
 namespace Prometheus.Client.HttpRequestDurations.Tests;
 
-public class ApplicationBuilderExtensionsTests
+public class ApplicationBuilderExtensionsTests : IDisposable
 {
-    private readonly ServiceCollection _services = new();
+    private readonly ServiceCollection _services = [];
 
     [Fact]
     public void AppBuilderIsNull_Throws_ArgumentNullException()
@@ -34,14 +33,11 @@ public class ApplicationBuilderExtensionsTests
         app.UsePrometheusRequestDurations();
         app.Build();
 
-        Assert.True(Metrics.DefaultCollectorRegistry.TryGet(Defaults.MetricName, out var defaultCollector));
-
-        // Cleanup
-        Metrics.DefaultCollectorRegistry?.Remove(defaultCollector);
+        Assert.True(Metrics.DefaultCollectorRegistry.TryGet(Defaults.MetricName, out _));
     }
 
     [Fact]
-    public void With_DICollecorRegistry()
+    public void With_DICollectorRegistry()
     {
         var registry = new CollectorRegistry();
         _services.AddSingleton<ICollectorRegistry>(registry);
@@ -55,7 +51,7 @@ public class ApplicationBuilderExtensionsTests
     }
 
     [Fact]
-    public void With_CustomCollecorRegistry()
+    public void With_CustomCollectorRegistry()
     {
         var registry = new CollectorRegistry();
 
@@ -66,5 +62,10 @@ public class ApplicationBuilderExtensionsTests
         Assert.True(registry.TryGet(Defaults.MetricName, out _));
 
         Assert.False(Metrics.DefaultCollectorRegistry.TryGet(Defaults.MetricName, out _));
+    }
+
+    public void Dispose()
+    {
+        Metrics.DefaultCollectorRegistry?.Remove(Defaults.MetricName);
     }
 }
